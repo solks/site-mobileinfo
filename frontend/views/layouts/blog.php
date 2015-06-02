@@ -5,8 +5,8 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use frontend\widgets\Alert;
 use frontend\widgets\BlogSlider;
-use frontend\widgets\PostNavSlider;
-use frontend\widgets\Tags;
+use frontend\widgets\NavPosts;
+use frontend\widgets\NavTags;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -27,31 +27,41 @@ AppAsset::register($this);
 <body>
 	<?php $this->beginBody() ?>
 	<div class="container">
-		<div id="header" class="row">
-			<div class="col-sm-5"><img id="logo" class="img-rounded" src="logo.png"></div>
+		<div class="row header">
+			<div class="col-sm-5"><img class="img-rounded logo" src="/images/logo.png"></div>
 			<div class="col-sm-7">
-				<form class="navbar-form navbar-left" role="search">
-					<input type="text" class="form-control" placeholder=" ">
-					<button type="submit" class="btn btn-default">Search</button>
+				<form class="navbar-form navbar-right " role="search">
+					<input type="text" class="form-control" placeholder="Поиск">
 				</form>
-				<img src="tips.png">
 			</div>
 		</div>
-		<div id="cat-line" class="row">
+		<div class="row categories-menu">
 			<div class="col-sm-12 categories">
 				<?= Html::a('Samsung', Url::to(['post/index', 'category' => 'samsung'])); ?>
-				<?= Html::a('Lenovo', Url::to(['post/index', 'category' => 'lenovo'])); ?>
-				<?= Html::a('ASUS', Url::to(['post/index', 'category' => 'asus'])); ?>
+				<?= Html::tag('span', 'Lenovo', ['class' => 'inactive-category']); ?>
+				<?= Html::tag('span', 'Nokia', ['class' => 'inactive-category']); ?>
+				<?= Html::tag('span', 'Sony', ['class' => 'inactive-category']); ?>
+				<?= Html::tag('span', 'LG', ['class' => 'inactive-category']); ?>
+				<?= Html::tag('span', 'Fly', ['class' => 'inactive-category']); ?>
 			</div>
 		</div>
-		
+		<div class="row blog-slider">
+			<div class="col-sm-2 blog-slider-cover">
+				<div class="cover-title">
+					<span>Популярное</span>
+				</div>
+			</div>
+			<div class="col-sm-10 blog-slider-content">
+				<?= BlogSlider::widget(['count' => 6]); ?>
+			</div>
+		</div>
 		<div class="row">
-			<div id="content-sidebar" class="col-sm-2"></div>
+			<div class="col-sm-2 content-sidebar"></div>
 			<div class="col-sm-10">
 				<?= $content ?>
 			</div>
 		</div>
-		<footer class="row" id="footer">
+		<footer class="row footer">
 			<p>&copy; My Company <?= date('Y') ?></p>
 		</footer>
 	

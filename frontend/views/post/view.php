@@ -20,9 +20,9 @@ $this->title = $post->title;
 		<?php 
 			if (preg_match('/<img[^<]+?">/isu', $post->{'cont'.$i}, $images)) { 
 		?>
-			<table class="cont-container"><tr>
+			<table class="content-container"><tr>
 				<td>
-					<?php foreach ($images as $image) echo '<div class="cont-image">'.$image.'</div>'; ?>
+					<?php foreach ($images as $image) echo '<div class="content-image">'.$image.'</div>'; ?>
 				</td>
 				<td>
 					<?=	preg_replace('/<img[^<]+?">/isu', '',  $post->{'cont'.$i++}) ?>
@@ -36,7 +36,7 @@ $this->title = $post->title;
 		} 
 		if ($post->video != '') { 
 	?>
-		<div class="marker" id="video-block">Видео</div>
+		<div class="marker" id="video">Видео</div>
 		<div class="post-content">
 			<p style="text-align:center;">
 				<iframe width="420" height="315" src="//www.youtube.com/embed/<?php echo $post->video; ?>" frameborder="0" allowfullscreen></iframe>
@@ -80,17 +80,3 @@ $this->title = $post->title;
 			'model'=>$newComment,
 	]); ?>
 </div><!-- comments -->
-	
-<? /*
-	<?php if(Yii::app()->user->hasFlash('commentSubmitted')): ?>
-		<div class="flash-success">
-			<?php echo Yii::app()->user->getFlash('commentSubmitted'); ?>
-		</div>
-	<?php else: ?>
-		<?php $this->renderPartial('/comment/_form',array(
-			'model'=>$comment,
-		)); ?>
-	<?php endif; ?>
-
-</div><!-- comments -->
-*/?>

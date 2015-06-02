@@ -28,7 +28,7 @@ AppAsset::register($this);
 	<?php $this->beginBody() ?>
 	<div class="container">
 		<div class="row header">
-			<div class="col-sm-5"><img class="img-rounded logo" src="logo.png"></div>
+			<div class="col-sm-5"><img class="img-rounded logo" src="/images/logo.png"></div>
 			<div class="col-sm-7">
 				<form class="navbar-form navbar-right " role="search">
 					<input type="text" class="form-control" placeholder="Поиск">

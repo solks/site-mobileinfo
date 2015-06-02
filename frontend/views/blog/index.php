@@ -2,15 +2,14 @@
 /* @var $this yii\web\View */
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
-
-echo '<h1 class="page-title">Блог</h1>';
 ?>
+<h1 class="page-title">Блог</h1>
 <?php foreach ($articles as $data) { ?>
-<div class="item-post">
+<div class="item">
 	<div class="item-title"><h2><?= Html::a($data->title, $data->url); ?></h2></div>
 	<div class="title-decoration"><div class="dleft"></div><div class="dright"></div></div>
-	<div class="item-cont">
-	<table class="cont-container"><tr>
+	<div class="item-content">
+	<table class="content-container"><tr>
 		<td>
 			<?= Html::img($data->preview_img); ?>
 		</td>
@@ -20,7 +19,7 @@ echo '<h1 class="page-title">Блог</h1>';
 				<?= Html::a('Подробнее', $data->url); ?>
 			</p>
 			<div class="item-nav">
-				Обновлено: <?= date('F j, Y',$data->update_time); ?>
+				Опубликовано: <?= date('F j, Y',$data->create_time); ?>
 			</div>
 		</td>
 	</tr></table>

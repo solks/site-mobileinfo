@@ -5,7 +5,7 @@ use yii\base\Widget;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use app\models\Blog;
-use evgeniyrru\yii2slick\Slick;
+use frontend\widgets\SlickMd;
 use yii\web\JsExpression;
 
 class BlogSlider extends Widget
@@ -30,7 +30,7 @@ class BlogSlider extends Widget
         	}
         }
         
-		return Slick::widget([
+		return SlickMd::widget([
 			'itemContainer' => 'div',
 			'items' => $items,
 			// settings for js plugin, see http://kenwheeler.github.io/slick/#settings

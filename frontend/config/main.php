@@ -30,6 +30,8 @@ return [
         	'showScriptName'=>false,
         	'enableStrictParsing' => true,
         	'rules' => [
+        		'blog/<id:\d+>-<title>' => 'blog/view',
+        		'blog' => 'blog/index',
         		'<category:\w+>/<id:\d+>-<title>' => 'post/view',
         		'<category:\w+>/<tag:\w+>' => 'post/index',
         		'<category:\w+>' => 'post/index',
