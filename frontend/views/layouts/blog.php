@@ -37,9 +37,9 @@ AppAsset::register($this);
 		</div>
 		<div class="row categories-menu">
 			<div class="col-sm-12 categories">
-				<?= Html::a('Samsung', Url::to(['post/index', 'category' => 'samsung'])); ?>
-				<?= Html::tag('span', 'Lenovo', ['class' => 'inactive-category']); ?>
-				<?= Html::tag('span', 'Nokia', ['class' => 'inactive-category']); ?>
+				<strong><?= Html::a('Samsung', Url::to(['post/index', 'category' => 'samsung'])); ?></strong>
+				<strong><?= Html::a('Nokia/Microsoft', Url::to(['post/index', 'category' => 'nokia-microsoft'])); ?></strong>
+				<strong><?= Html::a('Lenovo', Url::to(['post/index', 'category' => 'lenovo'])); ?></strong>
 				<?= Html::tag('span', 'Sony', ['class' => 'inactive-category']); ?>
 				<?= Html::tag('span', 'LG', ['class' => 'inactive-category']); ?>
 				<?= Html::tag('span', 'Fly', ['class' => 'inactive-category']); ?>

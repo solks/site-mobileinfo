@@ -26,12 +26,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            'id',
-            //'title',
+            [
+            	'attribute' => 'id',
+            	'format' => 'text',
+            	'options' => ['class' => 'id-col'],
+            ],
             [
             	'attribute' => 'title',
             	'format' => 'html',
-            	'value' => function($model){ return Html::a($model->title, Url::to(['frontend/post/view', 'id' => $model->id])); },
+            	'value' => function($model){ return Html::a($model->title, Url::to(['post/update', 'id' => $model->id])); },
             ],
             //'alias',
             [
@@ -39,7 +42,6 @@ $this->params['breadcrumbs'][] = $this->title;
             	'format' => 'text',
             	'filter' => ArrayHelper::map(Category::find()->asArray()->all(), 'cat_alias',  'cat_title')
             ],
-            //'category',
             'tags:ntext',
             //'intro:ntext',
             // 'cont1:ntext',
@@ -53,7 +55,23 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'update_time:datetime',
             // 'author_id',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+            	'class' => 'yii\grid\ActionColumn',
+            	'template' => '{view}&nbsp;&nbsp;&nbsp;{update}&nbsp;&nbsp;&nbsp;{delete}',
+            	'options' => ['class' => 'actions-col-wide'],
+            	'urlCreator' => function($action, $model, $key, $index) { 
+            		if ($action == 'view') {
+            			return Yii::$app->urlManagerFrontend->createUrl([
+            				'post/view', 
+            				'id' => $model->id, 
+            				'category' => $model->category,
+            				'title' => $model->alias,
+            			]);
+            		}
+            		else 
+            			return Url::to(['post/'.$action, 'id' => $model->id]);
+            	},
+            ],
         ],
     ]); ?>
 

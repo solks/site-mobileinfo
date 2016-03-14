@@ -1,4 +1,5 @@
 <?php
+use yii\helpers\StringHelper;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
@@ -16,6 +17,26 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="row">
         <div class="col-lg-5">
+        	<?php  
+        		/*$expected = crypt($model->password, $model->getUser()->password_hash);
+        		$actual = $model->getUser()->password_hash;
+        		$expected .= "\0";
+        		$actual .= "\0";
+        
+        		echo $expected."<br>";
+        		echo $actual."<br>";
+        		$expectedLength = StringHelper::byteLength($expected);
+        		$actualLength = StringHelper::byteLength($actual);
+        		$diff = $expectedLength - $actualLength;
+        		for ($i = 0; $i < $actualLength; $i++) {
+            		$diff |= (ord($actual[$i]) ^ ord($expected[$i % $expectedLength]));
+            		//echo $diff."<br>";
+        		} */
+        	
+        		//if(!function_exists('password_hash')) echo 'No'; 
+        		//print_r($model->getUser()); 
+        		//echo 'Pass:'.$model->password.'<br>Hash:'.$model->getUser()->password_hash;
+        	?>
             <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
                 <?= $form->field($model, 'username') ?>
                 <?= $form->field($model, 'password')->passwordInput() ?>

@@ -52,7 +52,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+        	['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
 
             ['role', 'default', 'value' => self::ROLE_USER],
@@ -154,6 +154,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password)
     {
+        //return true;
         return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
 
@@ -190,4 +191,22 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+    
+    public function beforeSave($insert)
+	{
+    	if (parent::beforeSave($insert)) {
+    	    if ($insert) {
+    	    	$this->created_at=$this->updated_at=time();
+    	    }
+    	    else
+    	    	$this->updated_at=time();
+    	    
+    	    $this->setPassword($this->password);
+    	    $this->generateAuthKey();
+    	        	    
+    	    return true;
+    	} else {
+    	    return false;
+    	}
+	}
 }

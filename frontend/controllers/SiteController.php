@@ -67,7 +67,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->redirect(['post/index', 'category' => 'samsung']);
     }
 
     public function actionLogin()

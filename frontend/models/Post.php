@@ -92,6 +92,10 @@ class Post extends \yii\db\ActiveRecord
         return $this->hasMany(Comment::className(), ['post_id' => 'id'])
         	->count();
     }
+    public function getCountry()
+	{
+		return $this->hasOne(Category::className(), ['cat_alias' => 'category']);
+	}
 
     /**
      * @return \yii\db\ActiveQuery

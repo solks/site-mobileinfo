@@ -2,9 +2,9 @@
 namespace backend\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
 use yii\web\Controller;
 use common\models\LoginForm;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
 /**
@@ -55,7 +55,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->redirect(['post/index']);
     }
 
     public function actionLogin()
@@ -65,6 +65,7 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
+        $this->layout = 'main-login';
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {

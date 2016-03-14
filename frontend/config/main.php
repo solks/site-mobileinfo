@@ -28,13 +28,14 @@ return [
         'urlManager' => [
         	'enablePrettyUrl' => true,
         	'showScriptName'=>false,
-        	'enableStrictParsing' => true,
+        	'enableStrictParsing' => false,
         	'rules' => [
         		'blog/<id:\d+>-<title>' => 'blog/view',
         		'blog' => 'blog/index',
-        		'<category:\w+>/<id:\d+>-<title>' => 'post/view',
-        		'<category:\w+>/<tag:\w+>' => 'post/index',
-        		'<category:\w+>' => 'post/index',
+        		'site/<action:\w+>' => 'site/<action>',
+        		'<category:[\w-]+>/<id:\d+>-<title>' => 'post/view',
+        		'<category:[\w-]+>/<tag:[\w-]+>' => 'post/index',
+        		'<category:[\w-]+>' => 'post/index',
         		'<controller:\w+>/<action:\w+>' => '<controller>/<action>',
         	],
         ],

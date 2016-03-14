@@ -10,9 +10,9 @@ class NavTags extends Widget
 {
     public function run()
     {
-        $tags = Tag::find()->orderBy('name')->asArray()->all();
-        
         $category = isset($_GET['category']) ? $_GET['category'] : '';
+        
+        $tags = Tag::find()->filterWhere(['category' => $category])->orderBy('name')->asArray()->all();
         
         $res = '';
 			

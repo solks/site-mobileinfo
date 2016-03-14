@@ -3,13 +3,13 @@
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 
-$t = "Настройка {$categoryName}, Android";
+$t = "Настройка {$categoryName->cat_title}, Android";
 if(!empty($tagName)) {
 	$this->title = $tagName.' - '.$t;
 	echo '<h1 class="page-title">'.$tagName.'</h1>';
 } else {
 	$this->title = $t; 
-	echo '<h1 class="page-title">'.$categoryName.'</h1>';
+	echo '<h1 class="page-title">'.$categoryName->cat_title.'</h1>';
 }
 ?>
 <?php foreach ($posts as $data) { ?>
@@ -30,7 +30,7 @@ if(!empty($tagName)) {
 			</td>
 			<td>
 				<?=	preg_replace('/<img[^<]+?">/isu', '',  $data->cont1) ?>
-				<p class="readmore"><?= Html::a('Подробнее', $data->url, array('class' => 'readmore')); ?></p>
+				<p class="readmore"><?= Html::a('Подробнее', $data->url, array('class' => 'btn btn-default btn-sm')); ?></p>
 				<div class="item-nav">
 					<b>Теги:</b>
 					<?php 
@@ -44,7 +44,7 @@ if(!empty($tagName)) {
 			</td>
 		</tr></table>
 	<?php 
-		}	else echo $post->cont1;
+		}	else echo $data->cont1;
 	?>
 	</div>
 </div>

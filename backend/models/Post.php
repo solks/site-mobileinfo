@@ -3,7 +3,8 @@
 namespace backend\models;
 
 use Yii;
-use mycomponents\myInflector;
+use backend\components\myInflector;
+use backend\models\Tag;
 
 /**
  * This is the model class for table "post".
@@ -46,7 +47,7 @@ class Post extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'category', 'cont1', 'status', 'author_id'], 'required'],
+            [['title', 'category', 'cont1', 'status'], 'required'],
             [['intro', 'cont1', 'cont2', 'cont3', 'tags', 't_tags'], 'string'],
             [['status', 'create_time', 'update_time', 'author_id'], 'integer'],
             [['title', 'alias', 'category', 'preview_img'], 'string', 'max' => 128],
@@ -100,15 +101,20 @@ class Post extends \yii\db\ActiveRecord
     	if (parent::beforeSave($insert)) {
     	    if ($insert) {
     	    	$this->create_time=$this->update_time=time();
-    	    	$this->author_id=Yii::app()->user->id;
+    	    	//$this->author_id=Yii::app()->user->id;
     	    }
     	    else
     	    	$this->update_time=time();
     	    
     	    if($this->alias == '') {
-    	    	Yii::$classMap['mycomponents\myInflector'] = '@vendor/mycomponents/myInflector.php';
+    	    	//Yii::$classMap['mycomponents\myInflector'] = '@vendor/mycomponents/myInflector.php';
 				$this->alias = myInflector::slug($this->title);
 			}
+			
+			$tagsArr = array_unique(explode(',', $this->tags));
+			foreach ($tagsArr as $key => $tag)
+				$tagsArr[$key] = myInflector::slug(trim($tag));
+			$this->t_tags = implode(', ', $tagsArr);
     	    
     	    return true;
     	} else {
@@ -119,9 +125,22 @@ class Post extends \yii\db\ActiveRecord
 	public function afterSave($insert, $changedAttributes)
 	{
 		parent::afterSave($insert, $changedAttributes);
+		//Yii::info(print_r($changedAttributes, true));
+		
+		$tagModel = new Tag;
+		$tagModel->category = $this->category;
 		if (isset($changedAttributes['tags'])) {
-			$tagModel = new Tag;
 			$tagModel->updateFrequency($changedAttributes['tags'], $this->tags);
-		}
+		} else 
+			$tagModel->updateFrequency('', $this->tags);
+	}
+	
+	public function afterDelete()
+	{
+		parent::afterDelete();
+		
+		$tagModel = new Tag;
+		$tagModel->category = $this->category;
+		$tagModel->updateFrequency($this->tags, '');
 	}
 }

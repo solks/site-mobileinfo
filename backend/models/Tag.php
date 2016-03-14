@@ -3,7 +3,7 @@
 namespace backend\models;
 
 use Yii;
-use mycomponents\myInflector;
+use backend\components\myInflector;
 
 /**
  * This is the model class for table "tag".
@@ -64,10 +64,11 @@ class Tag extends \yii\db\ActiveRecord
 	
 	public function addTags($tags) {
 		foreach($tags as $name) {
-			if (!$this->updateAllCounters(['frequency' => 1], ['name' => $name])) {
+			if (!$this->updateAllCounters(['frequency' => 1], ['name' => $name, 'category' => $this->category])) {
 				$tag = new Tag;
-				$tag->name=$name;
+				$tag->name = $name;
 				$tag->t_name = myInflector::slug($name);
+				$tag->category = $this->category;
 				$tag->frequency = 1;
 				$tag->save();
 			}
@@ -76,7 +77,7 @@ class Tag extends \yii\db\ActiveRecord
 	
 	public function removeTags($tags) {
 		if(empty($tags)) return;
-		$this->updateAllCounters(['frequency' => -1], ['name' => $tags]);
+		$this->updateAllCounters(['frequency' => -1], ['name' => $tags, 'category' => $this->category]);
 		$this->deleteAll('frequency <= 0');
 	}
 }

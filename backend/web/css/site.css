@@ -93,3 +93,6 @@ a.desc:after {
 /* --------------------------- */
 
 .post-form .form-control {width:inherit;}
+.id-col {width:60px;}
+.actions-col {width:60px;}
+.actions-col-wide {width:85px;}

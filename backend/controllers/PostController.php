@@ -7,6 +7,7 @@ use backend\models\Post;
 use backend\models\PostSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use vova07\imperavi\actions\GetAction;
 
@@ -18,6 +19,16 @@ class PostController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'imageget', 'imageupload'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -35,11 +46,17 @@ class PostController extends Controller
                 'url' => '/images/content/',
             	'path' => '@frontend/web/images/content',
                 'type' => GetAction::TYPE_IMAGES,
+                'options' => [
+                	'recursive' => false,
+                ],
             ],
             'imageupload' => [
-            	'class' => 'vova07\imperavi\actions\UploadAction',
-            	'url' => '/images/content/',
-            	'path' => '@frontend/web/images/content',
+            	'class' => 'backend\components\ImageUploadAction',
+            	'url' => '/images/content/origin/',
+            	'path' => '@frontend/web/images/content/origin/',
+            	'urlRes' => '/images/content/',
+            	'pathRes' => '@frontend/web/images/content/',
+            	'unique' => false,
         	],
         ];
     }
@@ -81,7 +98,7 @@ class PostController extends Controller
         $model = new Post();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -100,7 +117,7 @@ class PostController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,

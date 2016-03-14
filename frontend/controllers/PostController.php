@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use app\models\Post;
+use app\models\Category;
 use app\models\Tag;
 use app\models\Comment;
 use yii\data\Pagination;
@@ -25,17 +26,16 @@ class PostController extends \yii\web\Controller
 			->limit($pagination->limit)
 			->all();
 		
+		$categoryName = Category::find()->filterWhere(['like', 'cat_alias', $category])->one();
+		
 		$tagName = '';
 		if(!empty($tag)) {
 			$tagName = Tag::find()
 				->select('name')
-				->where(['t_name' => $tag, 'category' => $category])
+				->filterWhere(['t_name' => $tag, 'category' => $category])
 				->scalar();
 		}
-		if(!empty($category))
-			$categoryName = ucfirst($category);
-		else
-			$categoryName = 'Samsung, ASUS, Lenovo';
+		
 			
 		return $this->render('index', [
 			'categoryName' => $categoryName,

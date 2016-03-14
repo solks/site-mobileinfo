@@ -98,7 +98,7 @@ use vova07\imperavi\Widget;
     ?>
     <p class="help-block">Разделяйте теги коммами.</p>
 
-    <?= $form->field($model, 'status')->dropDownList([ 1 => 'Черновик', 2 => 'Опубликовано']) ?>
+    <?= $form->field($model, 'status')->dropDownList([ 2 => 'Опубликовано', 1 => 'Черновик']) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

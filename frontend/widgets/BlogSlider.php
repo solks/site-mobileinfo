@@ -26,19 +26,20 @@ class BlogSlider extends Widget
         	foreach ($rows as $row) {
         		$items[] = Html::img($row['preview_img'], ['class' => 'blog-slider-img pull-left'])
 					.'<h3>'.Html::a($row['title'], Url::to(['blog/view', 'id' => $row['id'], 'title' => $row['alias']])).'</h3>'
-					.'<p>'.$row['intro'].' ...</p>';
+					.$row['intro'];
         	}
         }
         
 		return SlickMd::widget([
 			'itemContainer' => 'div',
+			'containerOptions' => ['class' => 'blog-slider-content'],
 			'items' => $items,
 			// settings for js plugin, see http://kenwheeler.github.io/slick/#settings
 			'clientOptions' => [
 				'autoplay' => false,
 				'dots'	 => false,
 				'prevArrow' => '',
-				'nextArrow' => '<button type="button" class="slick-next blog-slider-next"></button>',
+				'nextArrow' => '<button type="button" class="slick-next slider-next"></button>',
 				// note, that for params passing function you should use JsExpression object
 				'onAfterChange' => new JsExpression('function() {console.log("The cat has shown")}'),
 			],

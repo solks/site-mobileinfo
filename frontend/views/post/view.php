@@ -15,7 +15,6 @@ $this->title = $post->title;
 		$i=1; 
 		while($i<=3 and $post->{'cont'.$i} != '') { 
 	?>
-	<div class="marker"><?= $i ?></div>
 	<div class="post-content">
 		<?php 
 			if (preg_match('/<img[^<]+?">/isu', $post->{'cont'.$i}, $images)) { 
