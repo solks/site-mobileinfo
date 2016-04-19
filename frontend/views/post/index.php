@@ -17,10 +17,17 @@ if(!empty($tagName)) {
 	<div class="item-title"><h2><?= Html::a(Html::encode($data->title), $data->url); ?></h2></div>
 	<div class="title-decoration"><div class="dleft"></div><div class="dright"></div></div>
 	<div class="item-content">
-	<?php if (preg_match('/<img[^<]+?">/isu', $data->cont1, $images)) {	?>
+	<?php 
+		$c_images = explode(';', $data->images);
+		
+		if (isset($c_images[0]) and $c_images[0] != '') { 
+			$images = explode(',', $c_images[0]);
+	?>
 		<table class="content-container"><tr>
 			<td>
-				<?php foreach ($images as $image) echo '<div class="content-image">'.$image.'</div>'; ?>
+				<div class="content-image">
+					<?= Html::img(Yii::$app->params['baseUrl'].'/images/content/'.$images[0]); ?>
+				</div>
 				<?php if (!empty($data->video)) { ?>
 					<span class="label-video"><strong>Видео</strong></span>
 					<a href="<?= $data->url ?>#video">
@@ -29,7 +36,7 @@ if(!empty($tagName)) {
 				<?php } ?>
 			</td>
 			<td>
-				<?=	preg_replace('/<img[^<]+?">/isu', '',  $data->cont1) ?>
+				<?=	$data->cont1; ?>
 				<p class="readmore"><?= Html::a('Подробнее', $data->url, array('class' => 'btn btn-default btn-sm')); ?></p>
 				<div class="item-nav">
 					<b>Теги:</b>
@@ -43,9 +50,7 @@ if(!empty($tagName)) {
 				</div>
 			</td>
 		</tr></table>
-	<?php 
-		}	else echo $data->cont1;
-	?>
+	<?php } else echo $data->cont1; ?>
 	</div>
 </div>
 <?php } ?>

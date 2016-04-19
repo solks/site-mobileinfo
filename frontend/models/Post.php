@@ -18,7 +18,7 @@ use yii\helpers\Url;
  * @property string $cont2
  * @property string $cont3
  * @property string $video
- * @property string $preview_img
+ * @property string $images
  * @property string $tags
  * @property string $atags
  * @property integer $status
@@ -48,7 +48,7 @@ class Post extends \yii\db\ActiveRecord
             [['title', 'alias', 'category', 'cont1', 'status', 'author_id'], 'required'],
             [['intro', 'cont1', 'cont2', 'cont3', 'tags', 't_tags'], 'string'],
             [['status', 'create_time', 'update_time', 'author_id'], 'integer'],
-            [['title', 'alias', 'category', 'preview_img'], 'string', 'max' => 128],
+            [['title', 'alias', 'category'], 'string', 'max' => 128],
             [['video'], 'string', 'max' => 16]
         ];
     }
@@ -68,7 +68,7 @@ class Post extends \yii\db\ActiveRecord
             'cont2' => 'Cont2',
             'cont3' => 'Cont3',
             'video' => 'Video',
-            'preview_img' => 'Preview Img',
+            'images' => 'Content images',
             'tags' => 'Tags',
             't_tags' => 'Atags',
             'status' => 'Status',

@@ -24,8 +24,9 @@ class PostSlider extends Widget
 			
         	foreach ($posts as $post) {
         		$item = Html::a('<h4>'.$post->title.'</h4>', $post->url);
-        		if ($post->preview_img)
-					$item .= Html::img('/images/content/thumbs/'.$post->preview_img, ['class' => 'pull-left posts-slider-img']);
+        		/*if ($post->images)
+					$item .= Html::img('/images/content/thumbs/'.$post->images, ['class' => 'pull-left posts-slider-img']);
+				*/
 				$item .= Html::tag('p', date("M j, Y", $post->create_time), ['class' => 'posts-slider-date']);
 				
 				foreach (explode(', ', $post->tags) as $t) {	

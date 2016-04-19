@@ -53,7 +53,7 @@ AppAsset::register($this);
 
         <div class="container">
         	<div class="row">
-        		<div class="col-sm-4 col-md-3 sidebar">
+        		<div class="col-sm-3 sidebar">
         		<?=
         			Nav::widget([
     					'items' => [
@@ -89,7 +89,7 @@ AppAsset::register($this);
 					]);
         		?>
         		</div>
-        		<div class="col-sm-8 col-md-9 main">
+        		<div class="col-sm-9 main">
         			<?= Breadcrumbs::widget([
             			'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         			]) ?>

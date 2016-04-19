@@ -12,21 +12,26 @@ $this->title = $post->title;
 		<?= $post->intro ?>
 	</div>
 	<?php
+		$c_images = explode(';', $post->images);
+		
 		$i=1; 
 		while($i<=3 and $post->{'cont'.$i} != '') { 
 	?>
 	<div class="post-content">
 		<?php 
-			if (preg_match('/<img[^<]+?">/isu', $post->{'cont'.$i}, $images)) { 
+			if (isset($c_images[$i-1]) and $c_images[$i-1] != '') {
+				$images = explode(',', $c_images[$i-1]);
 		?>
-			<table class="content-container"><tr>
-				<td>
-					<?php foreach ($images as $image) echo '<div class="content-image">'.$image.'</div>'; ?>
-				</td>
-				<td>
-					<?=	preg_replace('/<img[^<]+?">/isu', '',  $post->{'cont'.$i++}) ?>
-				</td>
-			</tr></table>
+		<table class="content-container"><tr>
+			<td>
+				<div class="content-image">
+					<?= Html::img(Yii::$app->params['baseUrl'].'/images/content/'.$images[0]); ?>
+				</div>
+			</td>
+			<td>
+				<?=	$post->{'cont'.$i++} ?>
+			</td>
+		</tr></table>
 		<?php 
 			} else echo $post->{'cont'.$i++};
 		?>

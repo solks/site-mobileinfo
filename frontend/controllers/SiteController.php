@@ -69,6 +69,11 @@ class SiteController extends Controller
     {
         return $this->redirect(['post/index', 'category' => 'samsung']);
     }
+    
+    public function actionSearch()
+	{
+		return $this->render('search');
+	}
 
     public function actionLogin()
     {

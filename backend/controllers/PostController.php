@@ -54,7 +54,7 @@ class PostController extends Controller
             	'class' => 'backend\components\ImageUploadAction',
             	'url' => '/images/content/origin/',
             	'path' => '@frontend/web/images/content/origin/',
-            	'urlRes' => '/images/content/',
+            	'urlRes' => Yii::$app->params['baseUrl'].'/images/content/',
             	'pathRes' => '@frontend/web/images/content/',
             	'unique' => false,
         	],

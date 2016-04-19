@@ -19,7 +19,7 @@ class PostSearch extends Post
     {
         return [
             [['id', 'status', 'create_time', 'update_time', 'author_id'], 'integer'],
-            [['title', 'alias', 'category', 'intro', 'cont1', 'cont2', 'cont3', 'video', 'preview_img', 'tags', 't_tags'], 'safe'],
+            [['title', 'alias', 'category', 'intro', 'cont1', 'cont2', 'cont3', 'video', 'images', 'tags', 't_tags'], 'safe'],
         ];
     }
 
@@ -67,7 +67,7 @@ class PostSearch extends Post
             ->andFilterWhere(['like', 'cont2', $this->cont2])
             ->andFilterWhere(['like', 'cont3', $this->cont3])
             ->andFilterWhere(['like', 'video', $this->video])
-            ->andFilterWhere(['like', 'preview_img', $this->preview_img])
+            ->andFilterWhere(['like', 'images', $this->images])
             ->andFilterWhere(['like', 'tags', $this->tags])
             ->andFilterWhere(['like', 't_tags', $this->t_tags]);
 

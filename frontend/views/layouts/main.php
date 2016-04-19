@@ -12,6 +12,7 @@ use frontend\widgets\NavTags;
 /* @var $content string */
 
 AppAsset::register($this);
+$category = isset($_GET['category']) ? $_GET['category'] : 'samsung';
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -30,8 +31,15 @@ AppAsset::register($this);
 		<div class="row header">
 			<div class="col-sm-5"><img class="logo" src="/images/logo.png"></div>
 			<div class="col-sm-7">
-				<form class="navbar-form navbar-right " role="search">
-					<input type="text" class="form-control" placeholder="Поиск">
+				<form action="/site/search" id="cse-search-box" class="navbar-form navbar-right " role="search">
+					<div>
+						<input type="hidden" name="category" value="<?=$category?>" />
+						<input type="hidden" name="cx" value="partner-pub-5001158605331260:1362917028" />
+						<input type="hidden" name="cof" value="FORID:10" />
+						<input type="hidden" name="ie" value="UTF-8" />
+						<input type="text" class="form-control" name="q" size="25"/>
+						<!--<input type="submit" name="sa" value="&#x041f;&#x043e;&#x0438;&#x0441;&#x043a;" />-->
+					</div>
 				</form>
 				<div class="header-nav navbar-right"><a href="http://123htc.ru"><img class="header-icon" src="/images/htc.png"></a></div>
 				<div class="header-nav navbar-right"><a href="http://www.youtube.com/channel/UC1xwv4mXDfhy142wbzuXC9Q/videos"><img class="header-icon" src="/images/youtube.png"></a></div>
@@ -76,6 +84,7 @@ AppAsset::register($this);
 	</div>
 
 	<?php $this->endBody() ?>
+	<script type="text/javascript" src="http://www.google.ru/coop/cse/brand?form=cse-search-box&amp;lang=ru"></script>
 </body>
 </html>
 <?php $this->endPage() ?>

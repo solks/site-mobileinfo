@@ -44,7 +44,7 @@ a.label-tag:hover, a.label-tag-na:hover {color:#555; border-color:#555;}
 .footer {height:60px; padding:20px; text-align:center; color:#ffffff; background-color:#888;}
 
 /*Content*/
-.item {margin:0 0 40px 0;}
+.item {margin:0 0 40px 0; clear:left;}
 .item-title {}
 .title-decoration .dleft {width:30%; border-top:#C3CEE0 2px solid;}
 .content-container td {vertical-align:top; padding:10px;}
