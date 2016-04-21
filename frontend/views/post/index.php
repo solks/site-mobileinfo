@@ -26,7 +26,7 @@ if(!empty($tagName)) {
 		<table class="content-container"><tr>
 			<td>
 				<div class="content-image">
-					<?= Html::img(Yii::$app->params['baseUrl'].'/images/content/'.$images[0]); ?>
+					<?= $images[0]; ?>
 				</div>
 				<?php if (!empty($data->video)) { ?>
 					<span class="label-video"><strong>Видео</strong></span>

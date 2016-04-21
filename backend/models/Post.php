@@ -110,7 +110,7 @@ class Post extends \yii\db\ActiveRecord
 				
 				$this->{'cont'.$i} .= "\n";
 				foreach ($cont_images as $img) {
-					$this->{'cont'.$i} .= ' '.Html::img(Yii::$app->params['baseUrl'].'/images/content/'.$img);
+					$this->{'cont'.$i} .= ' '.$img;
 				}
 			}
 		}
@@ -140,10 +140,17 @@ class Post extends \yii\db\ActiveRecord
 			
 			$baseUrl = Yii::$app->params['baseUrl'];
 			for ($i=1; $i<4; $i++) {
-				if (preg_match_all("#<img[^>]*?src=\"{$baseUrl}/images/content/([^\"]*?)\"[^>]*?>#isu", $this->{'cont'.$i}, $images)) {
+				if (preg_match_all("#<img[^>]*>#isu", $this->{'cont'.$i}, $images)) {
+					//clean style attribute
+					$images[0] = preg_replace('#style="[^"]+"#isu', '', $images[0]);
+					//clean delimiters
+					$images[0] = preg_replace('#[,;]"#isu', '-', $images[0]);
+					
 					if ($i > 1) $this->images .= ';';
-					$this->images .= implode(',', $images[1]);
-					$this->{'cont'.$i} = preg_replace('#<img[^>]+?>#isu', '',  $this->{'cont'.$i});
+					$this->images .= implode(',', $images[0]);
+					
+					//delete image from content
+					$this->{'cont'.$i} = preg_replace('#<img[^>]+>#isu', '',  $this->{'cont'.$i});
 					$this->{'cont'.$i} = preg_replace('#<p>\s*?</p>#isu', '',  $this->{'cont'.$i});
 				}
 			}
