@@ -58,10 +58,16 @@ class ImageUploadAction extends UploadAction
 		} elseif ($w_src == 720 & $h_src == 1280) {
 			$this->makeimage($image_src, 'Lenovo-tpl.png', new Box(191, 339), new Box(225, 426),  new Point(17, 37));
 		} else {
-			$imageSrc->thumbnail(new Box(225, 425))
-				->save($destPath, ['quality' => 92]);
+			$image_src->thumbnail(new Box(225, 425))
+				->save(Yii::getAlias($this->pathRes.$this->filename), ['quality' => 92]);
+			
+			//Small thumb
+			$image_src->thumbnail(new Box(75, 75), ManipulatorInterface::THUMBNAIL_OUTBOUND)
+			->save(Yii::getAlias($this->pathRes.'thumb/'.$this->filename), ['quality' => 92]);
 			//Image::thumbnail($src, 225, 400)->save($destPath, ['quality' => 92]);
 		}
+		
+		copy(Yii::getAlias($this->pathRes.$this->filename), Yii::getAlias('@backend/web/images/content/').$this->filename);
         
         $result['filelink'] = $this->urlRes.$this->filename;
         

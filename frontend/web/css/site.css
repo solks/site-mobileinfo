@@ -74,7 +74,7 @@ a.label-tag:hover, a.label-tag-na:hover {color:#555; border-color:#555;}
 .post a, #comments a {text-decoration:underline;}
 .post-content {}
 .content-image {margin-top:25px;}
-.content-image img {display: inline-block; padding: 5px; border: 1px solid #ddd; border-radius: 4px;}
+.content-image img {display: inline-block; padding: 5px;}
 .readmore {text-align:right; padding:10px 0;}
 .post-nav {
 	padding:10px; background-color:#DDE4EC; 
