@@ -12,6 +12,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\base\Theme;
 
 /**
  * Site controller
@@ -48,6 +49,25 @@ class SiteController extends Controller
             ],
         ];
     }
+    
+	public function beforeAction($action)
+	{
+		if (!parent::beforeAction($action)) {
+			return false;
+		}
+
+		if (Yii::$app->devicedetect->isMobile()) {
+			Yii::$app->view->theme = new Theme([
+				'basePath' => '@app/themes/pda',
+				'baseUrl' => '@web/themes/pda',
+				'pathMap' => [
+        			'@app/views' => '@app/themes/pda',
+        		],
+			]);
+		}
+		
+		return true; // or false to not run the action
+	}
 
     /**
      * @inheritdoc
@@ -57,10 +77,6 @@ class SiteController extends Controller
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
-            ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
     }

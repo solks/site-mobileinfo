@@ -38,7 +38,7 @@ class Comment extends \yii\db\ActiveRecord
             [['post_id', 'id', 'status', 'create_time'], 'integer'],
             [['content'], 'string'],
             [['author'], 'string', 'max' => 128],
-            [['verifyCode'], 'captcha']
+            [['verifyCode'], 'captcha', 'captchaAction' => 'post/captcha']
         ];
     }
 

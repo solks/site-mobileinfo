@@ -2,14 +2,47 @@
 
 namespace frontend\controllers;
 
+use Yii;
 use app\models\Post;
 use app\models\Category;
 use app\models\Tag;
 use app\models\Comment;
 use yii\data\Pagination;
+use yii\base\Theme;
 
 class PostController extends \yii\web\Controller
 {
+    public function beforeAction($action)
+	{
+		if (!parent::beforeAction($action)) {
+			return false;
+		}
+
+		if (Yii::$app->devicedetect->isMobile()) {
+			Yii::$app->view->theme = new Theme([
+				'basePath' => '@app/themes/pda',
+				'baseUrl' => '@web/themes/pda',
+				'pathMap' => [
+        			'@app/views' => '@app/themes/pda',
+        		],
+			]);
+		}
+		
+		return true; // or false to not run the action
+	}
+	
+	public function actions()
+	{
+		return [
+			'captcha' => [
+				'class' => 'frontend\components\HtmlCaptchaAction',
+				'minLength' => 5,
+				'maxLength' => 5,
+				'testLimit' => 1,
+			],
+		];
+	}
+    
     public function actionIndex($category = null, $tag = null)
     {
         $query = Post::find()->where(['status' => 2,])

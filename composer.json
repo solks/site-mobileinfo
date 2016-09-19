@@ -21,7 +21,8 @@
         "vova07/yii2-imperavi-widget": "*",
         "yiisoft/yii2-jui": "*",
         "evgeniyrru/yii2-slick": "*",
-        "yiisoft/yii2-imagine": "^2.0"
+        "yiisoft/yii2-imagine": "^2.0",
+        "alexandernst/yii2-device-detect": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

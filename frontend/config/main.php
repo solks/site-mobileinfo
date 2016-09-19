@@ -9,7 +9,7 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'devicedetect'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
         'user' => [
@@ -25,6 +25,19 @@ return [
                 ],
             ],
         ],
+		'devicedetect' => [
+			'class' => 'alexandernst\devicedetect\DeviceDetect'
+		],
+		'view' => [
+            'theme' => [
+                'basePath' => '@app/themes/desktop',
+                'baseUrl' => '@web/themes/desktop',
+                'pathMap' => [
+                    '@app/views' => '@app/themes/desktop',
+                ],
+            ],
+        ],
+        
         'urlManager' => [
         	'enablePrettyUrl' => true,
         	'showScriptName'=>false,
