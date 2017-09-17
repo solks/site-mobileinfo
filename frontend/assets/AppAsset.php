@@ -38,7 +38,7 @@ class AppAsset extends AssetBundle
 			];
 		}
 		else {
-			$this->css = ['css/site.css?v1.3'];
+			$this->css = ['css/site.css?v1.4'];
 			$this->depends = [
 				//'yii\web\YiiAsset',
 				'yii\bootstrap\BootstrapAsset',

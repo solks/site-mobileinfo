@@ -25,14 +25,25 @@ $this->title = $post->title;
 				$images = explode(',', $c_images[$i-1]);
 				echo '<div class="content-image">'.$images[0].'</div>';
 			}
-			
-			$i++;
 		?>
 	</div>
-	<?php 
-		} 
-		if ($post->video != '') { 
-	?>
+		<?php if ($i == 1) { ?>
+			<div class="a1m">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- infosmartphone_main -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5001158605331260"
+     data-ad-slot="9328303426"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+			</div>
+		<?php } ?> 
+	<?php $i++; } ?>
+	
+	<?php if ($post->video != '') { ?>
 		<div class="marker" id="video">Видео</div>
 		<div class="post-content">
 			<p style="text-align:center;">
@@ -54,28 +65,25 @@ $this->title = $post->title;
 	</div>
 </div>
 <div id="comments">
-	<?php if($post->commentCount>=1): ?>
-		<div class="comments-marker">Комментарии</div>
-			<?php foreach($post->comments as $comment): ?>
-			<div class="comment-wrap">
-				<div class="cid">
-					<?= Html::a('#'.$comment['id'], $post->url.'#c'.$comment['id'], array('title'=>'Ссылка на этот комментарий')); ?>
-				</div><div class="comment" id="c<?= $comment['id']; ?>">
-					<div class="comment-details">
-						<span class="comment-author"><?= $comment['author']; ?></span>
-						<span class="comment-time">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<?= date('F j, Y \a\t h:i',$comment['create_time']); ?></span>
-					</div>
-					<div class="comment-content">
-						<?= nl2br($comment['content']); ?>
-					</div>
-				</div>
-			</div>
-			<?php endforeach; ?>
-	<?php else :?>
-		<div class="comments-marker">Добавить комментарий</div>
-	<?php endif; ?>
+	<div class="comments-marker">Комментарии</div>
 	
 	<?= $this->render('_commentForm', [
 			'model'=>$newComment,
 	]); ?>
+	
+	<?php foreach($post->comments as $comment): ?>
+		<div class="comment-wrap">
+			<div class="cid">
+				<?= Html::a('#'.$comment['id'], $post->url.'#c'.$comment['id'], array('title'=>'Ссылка на этот комментарий')); ?>
+			</div><div class="comment" id="c<?= $comment['id']; ?>">
+				<div class="comment-details">
+					<span class="comment-author"><?= $comment['author']; ?></span>
+					<span class="comment-time">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<?= date('j M, Y \a\t H:i',$comment['create_time']); ?></span>
+				</div>
+				<div class="comment-content">
+					<?= nl2br($comment['content']); ?>
+				</div>
+			</div>
+		</div>
+	<?php endforeach; ?>
 </div><!-- comments -->

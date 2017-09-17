@@ -11,6 +11,8 @@ if(!empty($tagName)) {
 	$this->title = $t; 
 	echo '<h1 class="page-title">'.$categoryName->cat_title.'</h1>';
 }
+
+$i = 1;
 ?>
 <?php foreach ($posts as $data) { ?>
 <div class="item">
@@ -37,7 +39,7 @@ if(!empty($tagName)) {
 			</td>
 			<td>
 				<?=	$data->cont1; ?>
-				<p class="readmore"><?= Html::a('Подробнее', $data->url, array('class' => 'btn btn-default btn-sm')); ?></p>
+				<p class="readmore"><?= Html::a('Подробнее', $data->url, ['class' => 'btn btn-default btn-sm']); ?></p>
 				<div class="item-nav">
 					<b>Теги:</b>
 					<?php 
@@ -53,7 +55,21 @@ if(!empty($tagName)) {
 	<?php } else echo $data->cont1; ?>
 	</div>
 </div>
+<?php if ($i == 1 or $i == count($posts)) { ?>
+	<div class="a1">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- infosmartphone_main -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5001158605331260"
+     data-ad-slot="9328303426"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+	</div>
 <?php } ?>
+<?php $i++; } ?>
 <div class="pagination-container">
 	<?= LinkPager::widget(['pagination' => $pagination]) ?>
 </div>

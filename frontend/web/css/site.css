@@ -103,6 +103,9 @@ a.label-tag:hover, a.label-tag-na:hover {color:#555; border-color:#555;}
 .v-code .chr {border-collapse: collapse; float: left; margin: 2px;}
 .v-code .chr td {width: 3px; height: 3px; padding:0px; border: 1px solid #F2F2F2;}
 
+/*Adv*/
+.a1 {height: 120px; margin:15px 0;}
+
 /* ---- Slick ---- */
 /* Slider */
 .slick-slider
