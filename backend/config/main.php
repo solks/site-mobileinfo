@@ -35,6 +35,7 @@ return [
         	'enableStrictParsing' => false,
         	'rules' => [
         		'posts' => 'post/index',
+        		'blog' => 'blog/index',
         		'categories' => 'category/index',
         		'comments' => 'comment/index',
         		'users' => 'user/index',

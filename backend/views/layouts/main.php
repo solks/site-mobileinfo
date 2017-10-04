@@ -68,6 +68,11 @@ AppAsset::register($this);
             					'options' => ['class' => 'list-group-item'],
         					],
         					[
+            					'label' => 'Менеджер материалов блога',
+            					'url' => ['blog/index'],
+            					'options' => ['class' => 'list-group-item'],
+        					],
+        					[
             					'label' => 'Менеджер категорий',
             					'url' => ['category/index'],
             					'options' => ['class' => 'list-group-item'],
