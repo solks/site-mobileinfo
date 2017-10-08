@@ -14,7 +14,7 @@ $form = ActiveForm::begin([
 		<?= $form->field($model, 'content')->textarea(['rows'=>6]); ?>
 	</div>
 	<div class="form-row">
-		<?= $form->field($model, 'verifyCode')->widget('yii\captcha\Captcha')?>
+		<?= //$form->field($model, 'verifyCode')->widget('yii\captcha\Captcha')?>
 	</div>
 	<div class="form-row buttons">
 		<?= Html::submitButton('Добавить') ?>

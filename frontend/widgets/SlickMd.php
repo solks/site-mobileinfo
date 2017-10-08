@@ -1,10 +1,4 @@
 <?php
-
-namespace frontend\widgets;
-
-use evgeniyrru\yii2slick\Slick;
-use yii\helpers\Json;
-
 /**
  * This is a wrapper for Slick Carousel plugin
  * @see http://kenwheeler.github.io/slick/
@@ -12,6 +6,12 @@ use yii\helpers\Json;
  *
  * @author Evgeniy Chernishev <EvgeniyRRU@gmail.com>
  */
+ 
+namespace frontend\widgets;
+
+use evgeniyrru\yii2slick\Slick;
+use yii\helpers\Json;
+
 class SlickMd extends Slick
 {
     protected function registerClientScript()
@@ -21,10 +21,7 @@ class SlickMd extends Slick
         SlickAssetMd::register($view);
 
         $options = Json::encode($this->clientOptions);
-
         $id = $this->containerOptions['id'];
-
-        $js[] = ";";
 
         $js[] = "jQuery('#$id').slick($options);";
 

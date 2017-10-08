@@ -24,6 +24,8 @@ class AppAsset extends AssetBundle
     
     
     public function init() {
+    	parent::init();
+    	
 		if (Yii::$app->devicedetect->isMobile()) {
 			$this->css = ['css/pda.css?v1.1'];
 			$this->depends = [
@@ -33,7 +35,8 @@ class AppAsset extends AssetBundle
 			
 			Yii::$app->assetManager->bundles = [
 				'yii\web\YiiAsset' => false,
-				'yii\web\JqueryAsset' => ['js' => []],
+				'yii\web\JqueryAsset' => ['js' => ['//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js']],
+				'yii\bootstrap\BootstrapAsset' => ['css' => ['css/bootstrap.min.css']],
                 'yii\bootstrap\BootstrapPluginAsset' => ['js' => []],
 			];
 		}
@@ -46,11 +49,10 @@ class AppAsset extends AssetBundle
 			
 			Yii::$app->assetManager->bundles = [
                 'yii\web\YiiAsset' => false,
-				//'yii\web\JqueryAsset' => ['js' => []],
+				'yii\web\JqueryAsset' => ['js' => ['//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js']],
+				'yii\bootstrap\BootstrapAsset' => ['css' => ['css/bootstrap.min.css']],
                 'yii\bootstrap\BootstrapPluginAsset' => ['js' => []],
 			];
     	}
-    	
-    	parent::init();
     }
 }

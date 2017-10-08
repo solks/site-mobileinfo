@@ -103,7 +103,7 @@ $category = isset($_GET['category']) ? $_GET['category'] : 'samsung';
 	</div>
 
 	<?php $this->endBody() ?>
-	<script type="text/javascript" src="http://www.google.ru/coop/cse/brand?form=cse-search-box&amp;lang=ru"></script>
+<!--<script type="text/javascript" src="http://www.google.ru/coop/cse/brand?form=cse-search-box&amp;lang=ru"></script>-->
 <script type="text/javascript">
 	function toogleBoxes(a,b) {
 		var openBox=document.getElementById(a);

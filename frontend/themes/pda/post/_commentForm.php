@@ -3,8 +3,9 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 $form = ActiveForm::begin([
-	'id'=>'comment-form',
+	'id' => 'comment-form',
 	'enableClientScript' => false,
+	'enableAjaxValidation' => false,
 	'enableClientValidation' => false,
 ]); ?>
 
