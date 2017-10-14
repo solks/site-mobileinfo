@@ -7,6 +7,7 @@ use app\models\Post;
 use app\models\Category;
 use app\models\Tag;
 use app\models\Comment;
+use app\models\Stat;
 use yii\data\Pagination;
 use yii\base\Theme;
 
@@ -91,6 +92,7 @@ class PostController extends \yii\web\Controller
 		}
         
         $post = Post::findOne($id);
+        Stat::increment($id);
         
         return $this->render('view', [
         	'post' => $post,
