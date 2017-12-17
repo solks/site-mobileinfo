@@ -4,7 +4,7 @@ namespace app\models;
 
 use Yii;
 
-class Stat extends yii\base\Model
+class Stat extends \yii\db\ActiveRecord
 {
     public static function tableName()
     {
@@ -21,7 +21,7 @@ class Stat extends yii\base\Model
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'post_id' => 'Post ID',
             'hits' => 'Hits',
         ];
     }
@@ -31,7 +31,7 @@ class Stat extends yii\base\Model
         $hits = Yii::$app->db->createCommand()
 			->select('hits')
 			->from(self::tableName())
-			->where('id = :id', [':id' => $id])
+			->where('post_id = :id', [':id' => $id])
 			->scalar();
 		
 		return $hits;
@@ -39,14 +39,14 @@ class Stat extends yii\base\Model
     
     public static function increment($id)
 	{
-		$query = 'INSERT INTO '.self::tableName().' (id, hits) VALUES ('.$id.', 1) ON DUPLICATE KEY UPDATE hits = hits + 1';
+		$query = 'INSERT INTO '.self::tableName().' (post_id, hits) VALUES ('.$id.', 1) ON DUPLICATE KEY UPDATE hits = hits + 1';
 		
 		return Yii::$app->db->createCommand($query)->execute();
 	}
 	
 	public static function decrement($id)
 	{
-		$query = 'INSERT INTO '.self::tableName().' (id, hits) VALUES ('.$id.', 1) ON DUPLICATE KEY UPDATE hits = hits - 1';
+		$query = 'INSERT INTO '.self::tableName().' (post_id, hits) VALUES ('.$id.', 1) ON DUPLICATE KEY UPDATE hits = hits - 1';
 		
 		return Yii::$app->db->createCommand($query)->execute();
 	}

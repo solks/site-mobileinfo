@@ -1,51 +1,86 @@
 <?php
 /* @var $this yii\web\View */
-$this->title = 'My Yii Application';
+use yii\helpers\Html;
+use yii\widgets\LinkPager;
+
+$t = "Настройка смартфонов, Android";
+$this->title = $t;
+
+$i = 1;
 ?>
-<div class="site-index">
-
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+<div class="blog-content">
+    <div class="row">
+		<?php foreach ($articles as $data) { ?>
+        <div class="blog-item col-md-4">
+        	<div><?= Html::img($data->preview_img); ?></div>
+            <div><h3><?= Html::a(Html::encode($data->title), $data->url); ?></h3></div>
+            <div>
+            	<?= $data->intro ?>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
+            <p><?= Html::a('Читать далее &raquo;', $data->url, ['class' => 'btn btn-default']); ?></p>
         </div>
-
+		<?php } ?>
     </div>
+</div>
+ 
+<?= '<h1 class="page-title">'.$this->title.'</h1>'; ?>
+
+<?php foreach ($posts as $data) { ?>
+<div class="item">
+	<div class="item-title"><h2><?= Html::a(Html::encode($data->title), $data->url); ?></h2></div>
+	<div class="title-decoration"><div class="dleft"></div><div class="dright"></div></div>
+	<div class="item-content">
+	<?php 
+		$c_images = explode(';', $data->images);
+		
+		if (isset($c_images[0]) and $c_images[0] != '') { 
+			$images = explode(',', $c_images[0]);
+	?>
+		<table class="content-container"><tr>
+			<td>
+				<div class="content-image">
+					<?= $images[0]; ?>
+				</div>
+				<?php if (!empty($data->video)) { ?>
+					<span class="label-video"><strong>Видео</strong></span>
+					<a href="<?= $data->url ?>#video">
+						<img src="http://img.youtube.com/vi/<?= $data->video ?>/default.jpg" alt="" class="thumb-video">
+					</a>
+				<?php } ?>
+			</td>
+			<td>
+				<?=	$data->cont1; ?>
+				<p class="readmore"><?= Html::a('Подробнее', $data->url, ['class' => 'btn btn-default btn-sm']); ?></p>
+				<div class="item-nav">
+					<b>Теги:</b>
+					<?php 
+						foreach($data->ActiveTags as $key => $val)
+							echo Html::a($key, $val).', ';
+					?>
+					<br/>
+					<?= Html::a("Комментарии ({$data->commentCount})", $data->url.'#comments'); ?> |
+					Обновлено: <?= date('F j, Y',$data->update_time); ?>
+				</div>
+			</td>
+		</tr></table>
+	<?php } else echo $data->cont1; ?>
+	</div>
+</div>
+<?php if ($i == 1 or $i == count($posts)) { ?>
+<div class="a2">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-5001158605331260"
+     data-ad-slot="6125077423"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+<?php } ?>
+<?php $i++; } ?>
+<div class="pagination-container">
+	<?= LinkPager::widget(['pagination' => $pagination]) ?>
 </div>

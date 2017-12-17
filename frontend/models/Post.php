@@ -78,9 +78,6 @@ class Post extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getComments()
     {
         return $this->hasMany(Comment::className(), ['post_id' => 'id'])
@@ -97,12 +94,14 @@ class Post extends \yii\db\ActiveRecord
 		return $this->hasOne(Category::className(), ['cat_alias' => 'category']);
 	}
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getAuthor()
     {
         return $this->hasOne(TblUser::className(), ['id' => 'author_id']);
+    }
+    
+    public function getStat()
+    {
+        return $this->hasOne(Stat::className(), ['post_id' => 'id']);
     }
     
     public function getUrl()

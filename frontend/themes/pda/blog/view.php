@@ -6,15 +6,15 @@ use yii\helpers\Html;
 <div class="post">
 <?= $data->content; ?>
 </div>
-<div class="a1m">
+<div class="a2m">
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- infosmartphone_main -->
 <ins class="adsbygoogle"
      style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-du+j-37-5q+mt"
      data-ad-client="ca-pub-5001158605331260"
-     data-ad-slot="9328303426"
-     data-ad-format="auto"></ins>
+     data-ad-slot="3627686849"></ins>
 <script>
-(adsbygoogle = window.adsbygoogle || []).push({});
+     (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 </div>

@@ -5,6 +5,7 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use frontend\widgets\Alert;
 use frontend\widgets\BlogSlider;
+use frontend\widgets\PostSlider;
 use frontend\widgets\NavPosts;
 use frontend\widgets\NavTags;
 
@@ -39,7 +40,7 @@ AppAsset::register($this);
 	<div class="container-fluid">
 		<div class="row header">
 			<div class="col-sm-12">
-				<img class="logo" src="/images/logo.png">
+				<a href="/"><img class="logo" src="/images/logo.png"></a>
 				<div class="header-nav pull-right"><a href="http://123htc.ru"><img class="header-icon" src="/images/htc.png"></a></div>
 				<div class="header-nav pull-right"><a href="http://www.youtube.com/channel/UC1xwv4mXDfhy142wbzuXC9Q/videos"><img class="header-icon" src="/images/youtube.png"></a></div>
 			</div>
@@ -74,19 +75,18 @@ AppAsset::register($this);
 			</div>
 		</div>
 		<div class="row blog-slider">
-			<div class="col-sm-2 blog-slider-cover">
-				<div class="cover-title">
-					<span>Популярное</span>
-				</div>
-			</div>
-			<div class="col-sm-10 blog-slider-content">
+			<div class="col-sm-12 blog-slider-content">
 				<?= BlogSlider::widget(['count' => 6]); ?>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-2 content-sidebar"></div>
-			<div class="col-sm-10">
+			<div class="col-xs-12 col-sm-10 col-sm-offset-1 content">
 				<?= $content ?>
+			</div>
+		</div>
+		<div class="row">
+			<div class="hidden-xs col-sm-12 posts-slider">
+				<?= PostSlider::widget(['count' => 12]); ?>
 			</div>
 		</div>
 		<footer class="row footer">

@@ -65,8 +65,8 @@ a.label-tag:hover, a.label-tag-na:hover {color:#555; border-color:#555;}
 	content:counter(num); counter-increment:num;
 	padding:3px 5px; margin:0 5px 0 -28px; border-radius:3px 3px 0 3px; background:#DDE4EC;}
 .pagination-container {text-align:center;}
-.page-title {display:inline-block; position:relative; z-index:1; margin:20px 0 0 0; padding:5px 5px 5px 15px; font-size:2.2em;}
-.page-title::before {content:""; position:absolute; left:0px; top:1px; width:35px; height:35px; z-index:-1; background:#C3CEE0 none repeat scroll 0% 0%;}
+.page-title {display:inline-block; position:relative; z-index:1; margin:30px 0 10px 0; padding:5px 5px 5px 25px; font-size:2.6em;}
+.page-title::before {content:""; position:absolute; left:0px; top:1px; width:40px; height:40px; z-index:-1; background:#C3CEE0 none repeat scroll 0% 0%;}
 .marker, .comments-marker {
 	display:inline-block; padding:5px 10px; font-size:1.8em; 
 	background-color:#DDE4EC; border-radius:5px 5px 0 5px;}
@@ -105,6 +105,7 @@ a.label-tag:hover, a.label-tag-na:hover {color:#555; border-color:#555;}
 
 /*Adv*/
 .a1m {height: 280px; margin:15px 0;}
+.a2m {margin:15px 0 25px;}
 
 /* ---- Slick ---- */
 /* Slider */

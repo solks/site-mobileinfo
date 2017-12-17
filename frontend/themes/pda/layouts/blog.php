@@ -5,6 +5,7 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use frontend\widgets\Alert;
 use frontend\widgets\BlogSlider;
+use frontend\widgets\PostSlider;
 use frontend\widgets\NavPosts;
 use frontend\widgets\NavTags;
 
@@ -39,7 +40,7 @@ AppAsset::register($this);
 	<div class="container-fluid">
 		<div class="row header">
 			<div class="col-sm-12">
-				<img class="logo" src="/images/logo.png">
+				<a href="/"><img class="logo" src="/images/logo.png"></a>
 				<div class="header-nav pull-right"><a href="http://123htc.ru"><img class="header-icon" src="/images/htc.png"></a></div>
 				<div class="header-nav pull-right"><a href="http://www.youtube.com/channel/UC1xwv4mXDfhy142wbzuXC9Q/videos"><img class="header-icon" src="/images/youtube.png"></a></div>
 			</div>
@@ -74,20 +75,15 @@ AppAsset::register($this);
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-xs-12 col-sm-12 nav-tags">
-			&nbsp;
-			</div>
-		</div>
-		<div class="row">
 			<div class="col-xs-12 col-sm-10 col-sm-offset-1 content">
 				<?= $content ?>
 			</div>
 		</div>
-		<!--<div class="row">
-			<div class="hidden-xs col-sm-12 posts-slider">
-				<?php //echo PostSlider::widget(['count' => 12]); ?>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 posts-slider">
+				<?= PostSlider::widget(['count' => 8, 'layout' => 'pda']); ?>
 			</div>
-		</div>-->
+		</div>
 		<footer class="row footer">
 			<p>&copy; infosmartphone.ru <?= date('Y') ?></p>
 		</footer>

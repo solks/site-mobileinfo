@@ -74,16 +74,9 @@ $category = isset($_GET['category']) ? $_GET['category'] : 'samsung';
 				</button>
 			</div>
 		</div>
-		<div class="row nav-tags">
-			<div class="col-xs-12 col-sm-12">
-				<div class="text-center">
-					<?= NavTags::widget(); ?>
-				</div>
-			</div>
-		</div>
 		<div class="row">
-			<div class="hidden-xs col-sm-12 blog-slider">
-				<?= BlogSlider::widget(['count' => 2]); ?>
+			<div class="col-xs-12 col-sm-12 blog-slider">
+				<?= BlogSlider::widget(['count' => 2, 'layout' => 'pda']); ?>
 			</div>
 		</div>
 		<div class="row">
@@ -92,8 +85,8 @@ $category = isset($_GET['category']) ? $_GET['category'] : 'samsung';
 			</div>
 		</div>
 		<div class="row">
-			<div class="hidden-xs col-sm-12 posts-slider">
-				<?= PostSlider::widget(['count' => 12]); ?>
+			<div class="col-xs-12 col-sm-12 posts-slider">
+				<?= PostSlider::widget(['count' => 8, 'layout' => 'pda']); ?>
 			</div>
 		</div>
 		<footer class="row footer">

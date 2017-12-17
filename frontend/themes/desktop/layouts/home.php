@@ -74,18 +74,6 @@ $category = isset($_GET['category']) ? $_GET['category'] : 'samsung';
 				</button>
 			</div>
 		</div>
-		<div class="row nav-tags">
-			<div class="col-xs-12 col-sm-12">
-				<div class="text-center">
-					<?= NavTags::widget(); ?>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="hidden-xs col-sm-12 blog-slider">
-				<?= BlogSlider::widget(['count' => 2]); ?>
-			</div>
-		</div>
 		<div class="row">
 			<div class="col-xs-12 col-sm-11 col-sm-offset-05 content">
 				<?= $content ?>

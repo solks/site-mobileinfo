@@ -11,14 +11,18 @@ class PostSlider extends Widget
 {
     public $count = 9;
     
+    public $layout = 'desktop';
+    
     public $items = [];
 
     public function run()
     {
         
         if (empty($this->items)) {
-			$posts = Post::find()->where(['status' => 2,])
-				->orderBy('create_time DESC')
+			$posts = Post::find()
+				->joinWith('stat')
+				->where(['status' => 2,])
+				->orderBy('hits DESC')
 				->limit($this->count)
 				->all();
 			
@@ -37,6 +41,14 @@ class PostSlider extends Widget
         	}
         }
         
+        if ($this->layout == 'desktop') {
+        	$slidesToShow = 4;
+        	$slidesToScroll = 4;
+        } else {
+        	$slidesToShow = 2;
+        	$slidesToScroll = 2;
+        }
+        
 		return SlickMd::widget([
 			'itemContainer' => 'div',
 			'containerOptions' => ['class' => 'posts-slider-content'],
@@ -46,8 +58,8 @@ class PostSlider extends Widget
 				'autoplay' => false,
 				'dots'	 => false,
 				'infinite' => true,
-				'slidesToShow' => 4,
-				'slidesToScroll' => 4,
+				'slidesToShow' => $slidesToShow,
+				'slidesToScroll' => $slidesToScroll,
 				'prevArrow' => '<button type="button" class="slick-prev slider-prev"></button>',
 				'nextArrow' => '<button type="button" class="slick-next slider-next"></button>',
 				// note, that for params passing function you should use JsExpression object

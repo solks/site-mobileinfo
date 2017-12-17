@@ -12,6 +12,8 @@ class BlogSlider extends Widget
 {
     public $count = 3;
     
+    public $layout = 'desktop';
+    
     public $items = [];
 
     public function run()
@@ -24,9 +26,17 @@ class BlogSlider extends Widget
 				->all();
 			
         	foreach ($rows as $row) {
-        		$items[] = Html::img($row['preview_img'], ['class' => 'blog-slider-img pull-left'])
-					.'<h3>'.Html::a($row['title'], Url::to(['blog/view', 'id' => $row['id'], 'title' => $row['alias']])).'</h3>'
-					.$row['intro'];
+        		$blogUrl = Url::to(['blog/view', 'id' => $row['id'], 'title' => $row['alias']]);
+        		
+        		if ($this->layout == 'desktop') {
+        			$items[] = Html::img($row['preview_img'], ['class' => 'blog-slider-img pull-left'])
+						.'<h3>'.Html::a($row['title'], Url::to(['blog/view', 'id' => $row['id'], 'title' => $row['alias']])).'</h3>'
+						.$row['intro'];
+        		} else {
+        			$items[] = Html::img($row['preview_img'], ['class' => 'blog-slider-img pull-left'])
+						.'<h3>'.Html::a($row['title'], $blogUrl).'</h3>'
+						.'<p>'.Html::a("Читать далее &raquo;", $blogUrl, ['class' => 'btn btn-default']).'</p>';
+				}
         	}
         }
         

@@ -7,6 +7,12 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use app\models\Post;
+use app\models\Blog;
+use app\models\Category;
+use app\models\Tag;
+use app\models\Comment;
+use yii\data\Pagination;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -83,7 +89,32 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->redirect(['post/index', 'category' => 'samsung']);
+        // return $this->redirect(['post/index', 'category' => 'samsung']);
+        
+        $query = Post::find()->where(['status' => 2,]);
+		
+		$pagination = new Pagination([
+			'defaultPageSize' => 5,
+			'totalCount' => $query->count(),
+		]);
+		
+		$posts = $query->orderBy('update_time DESC')
+			->offset($pagination->offset)
+			->limit($pagination->limit)
+			->all();
+			
+		$articles = Blog::find()->where(['status' => 2,])
+			->orderBy('create_time DESC')
+			->limit(3)
+			->all();
+		
+		$this->layout = 'home';
+			
+		return $this->render('index', [
+			'articles' => $articles,
+			'posts' => $posts,
+			'pagination' => $pagination,
+		]);
     }
     
     public function actionSearch()
