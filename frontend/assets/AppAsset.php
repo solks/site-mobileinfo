@@ -27,7 +27,7 @@ class AppAsset extends AssetBundle
     	parent::init();
     	
 		if (Yii::$app->devicedetect->isMobile()) {
-			$this->css = ['css/pda.css?v1.1'];
+			$this->css = ['css/pda.css?v1.2'];
 			$this->depends = [
 				//'yii\web\YiiAsset',
 				'yii\bootstrap\BootstrapAsset',
@@ -41,7 +41,7 @@ class AppAsset extends AssetBundle
 			];
 		}
 		else {
-			$this->css = ['css/site.css?v1.4'];
+			$this->css = ['css/site.css?v1.5'];
 			$this->depends = [
 				//'yii\web\YiiAsset',
 				'yii\bootstrap\BootstrapAsset',
