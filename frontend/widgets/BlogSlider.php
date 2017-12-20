@@ -22,6 +22,7 @@ class BlogSlider extends Widget
         if (empty($this->items)) {
 			$rows = Blog::find()->where(['status' => 2,])
 				->limit($this->count)
+				->orderBy('create_time DESC')
 				->asArray()
 				->all();
 			

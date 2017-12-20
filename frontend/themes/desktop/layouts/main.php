@@ -83,7 +83,7 @@ $category = isset($_GET['category']) ? $_GET['category'] : 'samsung';
 		</div>
 		<div class="row">
 			<div class="hidden-xs col-sm-12 blog-slider">
-				<?= BlogSlider::widget(['count' => 2]); ?>
+				<?= BlogSlider::widget(['count' => 3]); ?>
 			</div>
 		</div>
 		<div class="row">
