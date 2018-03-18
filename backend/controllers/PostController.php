@@ -9,7 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use vova07\imperavi\actions\GetAction;
+use vova07\imperavi\actions\GetImagesAction;
 
 /**
  * PostController implements the CRUD actions for Post model.
@@ -42,13 +42,9 @@ class PostController extends Controller
     {
         return [
             'imageget' => [
-                'class' => 'vova07\imperavi\actions\GetAction',
+                'class' => 'vova07\imperavi\actions\GetImagesAction',
                 'url' => '/images/content/',
             	'path' => '@frontend/web/images/content',
-                'type' => GetAction::TYPE_IMAGES,
-                'options' => [
-                	'recursive' => false,
-                ],
             ],
             'imageupload' => [
             	'class' => 'backend\components\ImageUploadAction',

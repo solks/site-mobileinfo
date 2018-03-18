@@ -2,7 +2,7 @@
 
 namespace backend\components;
 
-use vova07\imperavi\actions\UploadAction;
+use vova07\imperavi\actions\UploadFileAction;
 use yii\imagine\Image;
 use Imagine\Image\ManipulatorInterface;
 use Imagine\Image\Box;
@@ -12,7 +12,7 @@ use yii\helpers\FileHelper;
 use Yii;
 
 
-class ImageUploadAction2 extends UploadAction
+class ImageUploadAction2 extends UploadFileAction
 {
     public $pathRes;
 

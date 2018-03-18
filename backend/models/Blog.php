@@ -3,9 +3,9 @@
 namespace backend\models;
 
 use Yii;
-use backend\components\myInflector;
+use yii\web\UploadedFile;
 use backend\models\Tag;
-use yii\helpers\Html;
+use backend\components\myInflector;
 use yii\imagine\Image;
 use Imagine\Image\ManipulatorInterface;
 use Imagine\Image\Box;
@@ -32,6 +32,11 @@ class Blog extends \yii\db\ActiveRecord
 {
     public $imageFile;
     
+    // Filepath to save uploaded image 
+    public $filePath = '@frontend/web/images/blog';
+    public $fileUrl = '/images/blog';
+    public $originFolder = 'origin'; 
+    
     /**
      * @inheritdoc
      */
@@ -50,7 +55,7 @@ class Blog extends \yii\db\ActiveRecord
             [['intro', 'content'], 'string'],
             [['status', 'create_time', 'update_time', 'author_id'], 'integer'],
             [['title', 'alias', 'preview_img'], 'string', 'max' => 128],
-            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
+            [['imageFile'], 'file', 'skipOnEmpty' => true],
         ];
     }
 
@@ -96,49 +101,24 @@ class Blog extends \yii\db\ActiveRecord
     
     public function beforeSave($insert)
 	{
-    	if (parent::beforeSave($insert)) {
-    	    if ($insert) {
-    	    	$this->create_time = $this->update_time = time();
-    	    	//$this->author_id=Yii::app()->user->id;
-    	    } else
-    	    	$this->update_time = time();
-    	    
-    	    if ($this->alias == '') {
-    	    	//Yii::$classMap['mycomponents\myInflector'] = '@vendor/mycomponents/myInflector.php';
-				$this->alias = myInflector::slug($this->title);
-			}
-			
-			if ($this->validate('imageFile')) {
-				$filePath = Yii::getAlias('@frontend/web/images/blog/');
-				$fileName = $this->imageFile->name;
-				
-				if ($this->validate($this->imageFile)) {
-					$this->imageFile->saveAs($filePath.'origin/'.$fileName);
-					$image_src = Image::getImagine()->open($filePath.'origin/'.$fileName);
-					
-					$w_src = $image_src->getSize()->getWidth();
-					$h_src = $image_src->getSize()->getHeight();
+    	if (!parent::beforeSave($insert)) {
+			return false;
+		}
 		
-					$h = 200;
-					$w = ceil($h * $w_src / $h_src);
-					
-					//Resize
-					$image_src->thumbnail(new Box($w, $h), ManipulatorInterface::THUMBNAIL_OUTBOUND)
-						->save(Yii::getAlias($filePath.$fileName), ['quality' => 94]);
-					//Small thumb
-					$image_src->thumbnail(new Box(75, 75), ManipulatorInterface::THUMBNAIL_OUTBOUND)
-						->save(Yii::getAlias($filePath.'thumb/'.$fileName), ['quality' => 92]);
-					
-					$this->preview_img = '/images/blog/'.$fileName;
-				}
-			}
-			
-			//$baseUrl = Yii::$app->params['baseUrl'];			
-    	    
-    	    return true;
-    	} else {
-    	    return false;
-    	}
+	    if ($insert) {
+	    	$this->create_time = $this->update_time = time();
+	    	//$this->author_id=Yii::app()->user->id;
+	    } else
+	    	$this->update_time = time();
+	    
+	    if ($this->alias == '') {
+	    	//Yii::$classMap['mycomponents\myInflector'] = '@vendor/mycomponents/myInflector.php';
+			$this->alias = myInflector::slug($this->title);
+		}
+		
+		//$baseUrl = Yii::$app->params['baseUrl'];			
+	    
+	    return true;
 	}
 	
 	public function afterSave($insert, $changedAttributes)
@@ -150,5 +130,31 @@ class Blog extends \yii\db\ActiveRecord
 	public function afterDelete()
 	{
 		parent::afterDelete();
+	}
+	
+	// Resize and save image
+	public function resizeImage()
+	{
+		if ($this->imageFile) {
+			$fileName = $this->imageFile->name;
+			$this->imageFile->saveAs(Yii::getAlias($this->filePath).'/'.$this->originFolder.'/'.$fileName);
+		
+			$image_src = Image::getImagine()->open(Yii::getAlias($this->filePath).'/'.$this->originFolder.'/'.$fileName);
+	
+			$w_src = $image_src->getSize()->getWidth();
+			$h_src = $image_src->getSize()->getHeight();
+
+			if ($h_src > 200) {
+				$h = 200;
+				$w = ceil($h * $w_src / $h_src);
+	
+				//Resize
+				$image_src->thumbnail(new Box($w, $h), ManipulatorInterface::THUMBNAIL_OUTBOUND)
+					->save(Yii::getAlias(Yii::getAlias($this->filePath).'/'.$fileName), ['quality' => 94]);
+				//Small thumb
+				$image_src->thumbnail(new Box(75, 75), ManipulatorInterface::THUMBNAIL_OUTBOUND)
+					->save(Yii::getAlias(Yii::getAlias($this->filePath).'/thumb/'.$fileName), ['quality' => 92]);
+			}
+		}
 	}
 }

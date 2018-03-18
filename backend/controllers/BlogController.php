@@ -9,7 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use vova07\imperavi\actions\GetAction;
+use vova07\imperavi\actions\GetImagesAction;
 use yii\web\UploadedFile;
 
 /**
@@ -43,13 +43,9 @@ class BlogController extends Controller
     {
         return [
             'imageget' => [
-                'class' => 'vova07\imperavi\actions\GetAction',
+                'class' => 'vova07\imperavi\actions\GetImagesAction',
                 'url' => '/images/blog/',
             	'path' => '@frontend/web/images/blog',
-                'type' => GetAction::TYPE_IMAGES,
-                'options' => [
-                	'recursive' => false,
-                ],
             ],
             'imageupload' => [
             	'class' => 'backend\components\ImageUploadAction2',
@@ -96,15 +92,25 @@ class BlogController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Blog();
+		$model = new Blog();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+		if ($model->load(Yii::$app->request->post())) {
+			$model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+			
+			if ($model->imageFile)
+				$model->preview_img = $model->fileUrl.'/'.$model->imageFile->name;
+			
+			if ($model->save()) {
+				$model->resizeImage();
+				
+				return $this->redirect(['index']);
+			} else
+        		return $this->render('error');
+		}
+		
+		return $this->render('create', [
+				'model' => $model,
+		]);
     }
 
     /**
@@ -119,9 +125,15 @@ class BlogController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
         	$model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-        	if ($model->save())	
+        	
+			if ($model->imageFile)
+				$model->preview_img = $model->fileUrl.'/'.$model->imageFile->name;
+			
+        	if ($model->save()) {
+				$model->resizeImage();
+					
         		return $this->redirect(['index']);
-        	else
+        	} else
         		return $this->render('error');
         } else {
             return $this->render('update', [
