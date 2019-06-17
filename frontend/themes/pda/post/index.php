@@ -50,7 +50,7 @@ $i = 1;
 <ins class="adsbygoogle"
      style="display:block"
      data-ad-format="fluid"
-     data-ad-layout-key="-du+j-37-5q+mt"
+     data-ad-layout-key="-9c+f8-50-ip+1gi"
      data-ad-client="ca-pub-5001158605331260"
      data-ad-slot="3627686849"></ins>
 <script>

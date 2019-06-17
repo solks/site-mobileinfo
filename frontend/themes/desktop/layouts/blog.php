@@ -69,6 +69,7 @@ AppAsset::register($this);
 				<strong><?= Html::a('Nokia/Microsoft', Url::to(['post/index', 'category' => 'nokia-microsoft'])); ?></strong>
 				<strong><?= Html::a('Lenovo', Url::to(['post/index', 'category' => 'lenovo'])); ?></strong>
 				<strong><?= Html::a('Meizu', Url::to(['post/index', 'category' => 'meizu'])); ?></strong>
+				<strong><?= Html::a('Xiaomi', Url::to(['post/index', 'category' => 'xiaomi'])); ?></strong>
 				<button type="button" onclick="toogleBoxes('categories-box','search-box')" class="btn-menu pull-right">
 					<span class="glyphicon glyphicon-search navbar-right"></span>
 				</button>

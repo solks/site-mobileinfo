@@ -6,13 +6,16 @@ use yii\widgets\LinkPager;
 $this->title = 'Поиск по сайту';
 echo '<h1 class="page-title">'.$this->title.'</h1>';
 ?>
-<div id="cse-search-results"></div>
-<script type="text/javascript">
-	var googleSearchIframeName = "cse-search-results";
-	var googleSearchFormName = "cse-search-box";
-	var googleSearchFrameWidth = 800;
-	var googleSearchDomain = "www.google.ru";
-	var googleSearchPath = "/cse";
+<script>
+  (function() {
+    var cx = 'partner-pub-5001158605331260:1362917028';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
 </script>
-<script type="text/javascript" src="http://www.google.com/afsonline/show_afs_search.js"></script>
+<gcse:searchresults-only></gcse:searchresults-only>
 
