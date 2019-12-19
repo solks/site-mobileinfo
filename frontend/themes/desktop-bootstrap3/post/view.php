@@ -18,41 +18,40 @@ $this->title = $post->title;
 		while($i<=3 and $post->{'cont'.$i} != '') { 
 	?>
 	<div class="post-content">
-		<?php
-			echo $post->{'cont'.$i};
-		 
+		<?php 
 			if (isset($c_images[$i-1]) and $c_images[$i-1] != '') {
 				$images = explode(',', $c_images[$i-1]);
-				echo '<div class="content-image">'.$images[0].'</div>';
-			}
+		?>
+		<table class="content-container"><tr>
+			<td>
+				<div class="content-image">
+					<?= $images[0]; ?>
+				</div>
+			</td>
+			<td>
+				<?=	$post->{'cont'.$i} ?>
+			</td>
+		</tr></table>
+		<?php 
+			} else echo $post->{'cont'.$i};
 		?>
 	</div>
-		<?php if ($i == 1 or $i == 3 or $post->cont3 == '') { ?>
-<div class="a2m">
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<ins class="adsbygoogle"
-     style="display:block; text-align:center;"
-     data-ad-layout="in-article"
-     data-ad-format="fluid"
-     data-ad-client="ca-pub-5001158605331260"
-     data-ad-slot="6125077423"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-</div>
+		<?php if ($i == 1) { ?>
+			<div class="a1">
+			</div>
+		<?php } elseif ($i == 3 or $post->cont3 == '') { ?>
+			<div class="a2">
+			</div>
 		<?php } ?> 
 	<?php $i++; } ?>
 	
 	<?php if ($post->video != '') { ?>
 		<div class="marker" id="video">Видео</div>
-		<div class="post-content">
-			<p style="text-align:center;">
-				<iframe width="300" height="225" src="//www.youtube.com/embed/<?php echo $post->video; ?>" frameborder="0" allowfullscreen></iframe>
-			</p>
+		<div class="dleft"> </div>
+		<div class="post-content video-frame">
+			<iframe width="550" height="360" src="//www.youtube.com/embed/<?php echo $post->video; ?>" frameborder="0" allowfullscreen></iframe>
 		</div>
-	<?php 
-		}
-	?>
+	<?php } ?>
 	<div class="post-nav">
 		<b>Теги:</b>
 		<?php 
@@ -65,7 +64,8 @@ $this->title = $post->title;
 	</div>
 </div>
 <div id="comments">
-	<div class="comments-marker">Комментарии</div>
+	<div class="marker">Комментарии</div>
+	<div class="dleft"> </div>
 	
 	<?= $this->render('_commentForm', [
 			'model'=>$newComment,

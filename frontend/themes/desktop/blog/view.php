@@ -2,6 +2,7 @@
 /* @var $this yii\web\View */
 use yii\helpers\Html;
 ?>
+<!--
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({
@@ -9,11 +10,11 @@ use yii\helpers\Html;
           enable_page_level_ads: true
      });
 </script>
-<h1 class="page-title"><?= $data->title; ?></h1>
+-->
 <div class="post">
 <?= $data->content; ?>
 </div>
-<div class="a2">
+<!--<div class="a2">
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <ins class="adsbygoogle"
      style="display:block; text-align:center;"
@@ -24,4 +25,4 @@ use yii\helpers\Html;
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-</div>
+</div>-->

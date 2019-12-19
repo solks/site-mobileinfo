@@ -27,16 +27,20 @@ class BlogSlider extends Widget
 				->all();
 			
         	foreach ($rows as $row) {
-        		$blogUrl = Url::to(['blog/view', 'id' => $row['id'], 'title' => $row['alias']]);
+        		$articleUrl = Url::to(['blog/view', 'id' => $row['id'], 'title' => $row['alias']]);
+        		$blogUrl = Url::to('/blog');
         		
         		if ($this->layout == 'desktop') {
-        			$items[] = Html::img($row['preview_img'], ['class' => 'blog-slider-img pull-left'])
-						.'<h3>'.Html::a($row['title'], Url::to(['blog/view', 'id' => $row['id'], 'title' => $row['alias']])).'</h3>'
-						.$row['intro'];
+        			$items[] = Html::img($row['preview_img'], ['class' => 'blog-slider-img'])
+						.'<div class="blog-slider-intro">'
+						.'<h3 class="blog-slider-title">'.Html::a($row['title'], $articleUrl).'</h3>'
+						.$row['intro']
+						.'</div>'
+						.'<p class="readmore">'.Html::a("Блог &raquo;", $blogUrl, ['class' => 'btn btn-default']).'</p>';
         		} else {
         			$items[] = Html::img($row['preview_img'], ['class' => 'blog-slider-img pull-left'])
-						.'<h3>'.Html::a($row['title'], $blogUrl).'</h3>'
-						.'<p>'.Html::a("Читать далее &raquo;", $blogUrl, ['class' => 'btn btn-default']).'</p>';
+						.'<h3>'.Html::a($row['title'], $articleUrl).'</h3>'
+						.'<div class="readmore">'.Html::a("Блог &raquo;", $blogUrl, ['class' => 'btn btn-default']).'</div>';
 				}
         	}
         }

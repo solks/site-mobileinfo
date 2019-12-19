@@ -11,6 +11,7 @@ class NavTags extends Widget
     public function run()
     {
         $category = isset($_GET['category']) ? $_GET['category'] : '';
+        $t = isset($_GET['tag']) ? $_GET['tag'] : '';
         
         $tags = Tag::find()->filterWhere(['category' => $category])->orderBy('name')->asArray()->all();
         
@@ -20,7 +21,7 @@ class NavTags extends Widget
         	$res .= Html::a(
         		$tag['name'], 
         		Url::to(['post/index', 'category' => $category, 'tag'=>$tag['t_name']]), 
-        		['class' => 'label label-tag']
+        		['class' => $t == $tag['t_name'] ? 'tag active' : 'tag']
         	)
         	."\n";
         }

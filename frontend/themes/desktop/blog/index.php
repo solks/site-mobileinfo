@@ -3,26 +3,27 @@
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 ?>
-<h1 class="page-title">Блог</h1>
+<!--<h1 class="page-title">Блог</h1>-->
 <?php foreach ($articles as $data) { ?>
 <div class="item">
-	<div class="item-title"><h2><?= Html::a($data->title, $data->url); ?></h2></div>
-	<div class="title-decoration"><div class="dleft"></div><div class="dright"></div></div>
-	<div class="item-content">
-	<table class="content-container"><tr>
-		<td>
+	<div class="item-title">
+		<?= Html::a($data->title, $data->url); ?>
+	</div>
+	<div class="row section">
+		<div class="col-12 col-sm-auto section-image">
 			<?= Html::img($data->preview_img); ?>
-		</td>
-		<td>
-			<?=	$data->intro; ?>
-			<p class="readmore">
-				<?= Html::a('Подробнее', $data->url); ?>
-			</p>
+		</div>
+		<div class="col-12 col-sm">
+			<div class="blog-intro">
+				<?=	$data->intro; ?>
+			</div>
+			<div class="readmore">
+				<?= Html::a('Далее', $data->url, ['class' => 'btn btn-default']); ?>
+			</div>
 			<div class="item-nav">
 				Опубликовано: <?= date('F j, Y',$data->create_time); ?>
 			</div>
-		</td>
-	</tr></table>
+		</div>
 	</div>
 	
 </div>

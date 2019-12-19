@@ -4,7 +4,6 @@ use yii\helpers\Html;
 use yii\widgets\LinkPager;
 
 $this->title = 'Поиск по сайту';
-echo '<h1 class="page-title">'.$this->title.'</h1>';
 ?>
 <script>
   (function() {

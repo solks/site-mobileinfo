@@ -9,20 +9,12 @@ use yii\base\Theme;
 
 class BlogController extends \yii\web\Controller
 {
+    public $contentTitle = '';
+    
     public function beforeAction($action)
 	{
 		if (!parent::beforeAction($action)) {
 			return false;
-		}
-
-		if (Yii::$app->devicedetect->isMobile()) {
-			Yii::$app->view->theme = new Theme([
-				'basePath' => '@app/themes/pda',
-				'baseUrl' => '@web/themes/pda',
-				'pathMap' => [
-        			'@app/views' => '@app/themes/pda',
-        		],
-			]);
 		}
 		
 		return true; // or false to not run the action
@@ -41,6 +33,12 @@ class BlogController extends \yii\web\Controller
 			->offset($pagination->offset)
 			->limit($pagination->limit)
 			->all();
+			
+		$this->view->params['breadcrumbs'] = [
+			'Блог',
+		];
+		
+		$this->contentTitle = 'Блог';
 		
 		$this->layout = 'blog';
 		
@@ -53,6 +51,13 @@ class BlogController extends \yii\web\Controller
     public function actionView($id)
     {
         $article = Blog::findOne($id);
+        
+        $this->view->params['breadcrumbs'] = [
+			['label' => 'Блог', 'url' => ['/blog']],
+			$article->title,
+		];
+		
+		$this->contentTitle = $article->title;
         
         $this->layout = 'blog';
         

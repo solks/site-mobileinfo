@@ -26,33 +26,17 @@ class AppAsset extends AssetBundle
     public function init() {
     	parent::init();
     	
-		if (Yii::$app->devicedetect->isMobile()) {
-			$this->css = ['css/pda.css?v1.2'];
-			$this->depends = [
-				//'yii\web\YiiAsset',
-				'yii\bootstrap\BootstrapAsset',
-			];
-			
-			Yii::$app->assetManager->bundles = [
-				'yii\web\YiiAsset' => false,
-				'yii\web\JqueryAsset' => ['js' => ['//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js']],
-				'yii\bootstrap\BootstrapAsset' => ['css' => ['css/bootstrap.min.css']],
-                'yii\bootstrap\BootstrapPluginAsset' => ['js' => []],
-			];
-		}
-		else {
-			$this->css = ['css/site.css?v1.5'];
-			$this->depends = [
-				//'yii\web\YiiAsset',
-				'yii\bootstrap\BootstrapAsset',
-			];
-			
-			Yii::$app->assetManager->bundles = [
-                'yii\web\YiiAsset' => false,
-				'yii\web\JqueryAsset' => ['js' => ['//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js']],
-				'yii\bootstrap\BootstrapAsset' => ['css' => ['css/bootstrap.min.css']],
-                'yii\bootstrap\BootstrapPluginAsset' => ['js' => []],
-			];
-    	}
+		$this->css = ['css/site.css?v2.0b'];
+		$this->depends = [
+			//'yii\web\YiiAsset',
+			'yii\bootstrap4\BootstrapAsset',
+		];
+		
+		Yii::$app->assetManager->bundles = [
+            'yii\web\YiiAsset' => false,
+			'yii\web\JqueryAsset' => ['js' => ['//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js']],
+			'yii\bootstrap4\BootstrapAsset' => ['css' => ['css/bootstrap-grid.min.css']],
+            'yii\bootstrap4\BootstrapPluginAsset' => ['js' => []],
+		];
     }
 }

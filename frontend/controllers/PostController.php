@@ -13,20 +13,12 @@ use yii\base\Theme;
 
 class PostController extends \yii\web\Controller
 {
+	public $contentTitle = '';
+	
     public function beforeAction($action)
 	{
 		if (!parent::beforeAction($action)) {
 			return false;
-		}
-
-		if (Yii::$app->devicedetect->isMobile()) {
-			Yii::$app->view->theme = new Theme([
-				'basePath' => '@app/themes/pda',
-				'baseUrl' => '@web/themes/pda',
-				'pathMap' => [
-        			'@app/views' => '@app/themes/pda',
-        		],
-			]);
 		}
 		
 		return true; // or false to not run the action
@@ -60,7 +52,10 @@ class PostController extends \yii\web\Controller
 			->limit($pagination->limit)
 			->all();
 		
-		$categoryName = Category::find()->filterWhere(['like', 'cat_alias', $category])->one();
+		$categoryName = Category::find()
+			->select('cat_title')
+			->filterWhere(['like', 'cat_alias', $category])
+			->scalar();
 		
 		$tagName = '';
 		if(!empty($tag)) {
@@ -70,6 +65,18 @@ class PostController extends \yii\web\Controller
 				->scalar();
 		}
 		
+		if(!empty($tag)) {
+			$this->view->params['breadcrumbs'] = [
+				['label' => $categoryName, 'url' => ['post/index', 'category' => $category]],
+				$tagName,
+			];
+			$this->contentTitle = $tagName.' - '.$categoryName;
+		} else {
+			$this->view->params['breadcrumbs'] = [
+				$categoryName,
+			];
+			$this->contentTitle = $categoryName;
+		}
 			
 		return $this->render('index', [
 			'categoryName' => $categoryName,
@@ -93,6 +100,18 @@ class PostController extends \yii\web\Controller
         
         $post = Post::findOne($id);
         Stat::increment($id);
+        
+        $categoryName = Category::find()
+			->select('cat_title')
+			->filterWhere(['like', 'cat_alias', $post->category])
+			->scalar();
+        
+        $this->view->params['breadcrumbs'] = [
+			['label' => $categoryName, 'url' => ['post/index', 'category' => $post->category]],
+			$post->title,
+		];
+		
+		$this->contentTitle = $post->title;
         
         return $this->render('view', [
         	'post' => $post,

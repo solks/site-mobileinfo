@@ -20,7 +20,7 @@ $form = ActiveForm::begin([
 		<?= $form->field($model, 'verifyCode')->widget('frontend\components\HtmlCaptcha')?>
 	</div>
 	<div class="form-row buttons">
-		<?= Html::submitButton('Добавить') ?>
+		<?= Html::submitButton('Добавить', ['class' => 'btn-submit']) ?>
 	</div>
 </div><!-- form -->
 

@@ -20,14 +20,10 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\base\Theme;
 
-/**
- * Site controller
- */
 class SiteController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
+    public $contentTitle = '';
+    
     public function behaviors()
     {
         return [
@@ -61,23 +57,10 @@ class SiteController extends Controller
 		if (!parent::beforeAction($action)) {
 			return false;
 		}
-
-		if (Yii::$app->devicedetect->isMobile()) {
-			Yii::$app->view->theme = new Theme([
-				'basePath' => '@app/themes/pda',
-				'baseUrl' => '@web/themes/pda',
-				'pathMap' => [
-        			'@app/views' => '@app/themes/pda',
-        		],
-			]);
-		}
 		
 		return true; // or false to not run the action
 	}
 
-    /**
-     * @inheritdoc
-     */
     public function actions()
     {
         return [
@@ -103,15 +86,17 @@ class SiteController extends Controller
 			->limit($pagination->limit)
 			->all();
 			
-		$articles = Blog::find()->where(['status' => 2,])
-			->orderBy('create_time DESC')
-			->limit(3)
-			->all();
+		//$articles = Blog::find()->where(['status' => 2,])
+		//	->orderBy('create_time DESC')
+		//	->limit(3)
+		//	->all();
+		
+		$this->contentTitle = 'Настройка смартфонов, Android';
 		
 		$this->layout = 'home';
 			
 		return $this->render('index', [
-			'articles' => $articles,
+			//'articles' => $articles,
 			'posts' => $posts,
 			'pagination' => $pagination,
 		]);
@@ -119,6 +104,14 @@ class SiteController extends Controller
     
     public function actionSearch()
 	{
+		$this->view->params['breadcrumbs'] = [
+			'Search',
+		];
+		
+		$this->contentTitle = 'Поиск по сайту';
+		
+		$this->layout = 'home';
+		
 		return $this->render('search');
 	}
 

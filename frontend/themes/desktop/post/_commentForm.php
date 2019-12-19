@@ -10,17 +10,11 @@ $form = ActiveForm::begin([
 ]); ?>
 
 <div class="cform">
-	<div class="form-row">
-		<?= $form->field($model, 'author')->textInput(['maxlength'=>128]); ?>
-	</div>
-	<div class="form-row">
-		<?= $form->field($model, 'content')->textarea(['rows'=>6]); ?>
-	</div>
-	<div class="form-row">
-		<?= $form->field($model, 'verifyCode')->widget('frontend\components\HtmlCaptcha')?>
-	</div>
-	<div class="form-row buttons">
-		<?= Html::submitButton('Добавить') ?>
+	<?= $form->field($model, 'author')->textInput(['maxlength'=>128]); ?>
+	<?= $form->field($model, 'content')->textarea(['rows'=>6]); ?>
+	<?= $form->field($model, 'verifyCode')->widget('frontend\components\HtmlCaptcha')?>
+	<div class="buttons">
+		<?= Html::submitButton('Добавить', ['class' => 'btn-submit']) ?>
 	</div>
 </div><!-- form -->
 
