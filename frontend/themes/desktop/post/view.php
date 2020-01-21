@@ -25,19 +25,24 @@ use yii\helpers\Html;
 			<?=	$post->{'cont'.$i}; ?>
 		</div>
 	</div>
-		<?php if ($i == 1) { ?>
-		<div class="a1">
-		</div>
-		<?php } elseif ($i == 3 or $post->cont3 == '') { ?>
-		<div class="a2">
-		</div>
-		<?php } ?> 
 	<?php $i++; } ?>
-	
+	<div class="a2">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- infosmartphone_links -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5001158605331260"
+     data-ad-slot="3050750852"
+     data-ad-format="link"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+	</div>
 	<?php if ($post->video != '') { ?>
 	<div id="video" class="s-title">Видео</div>
 	<div class="section video-frame">
-		<iframe width="550" height="360" src="//www.youtube.com/embed/<?php echo $post->video; ?>" frameborder="0" allowfullscreen></iframe>
+		<iframe width="550" height="360" class="lazyload" data-src="//www.youtube.com/embed/<?php echo $post->video; ?>" frameborder="0" allowfullscreen></iframe>
 	</div>
 	<?php } ?>
 	<div class="post-nav">

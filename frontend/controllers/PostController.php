@@ -45,6 +45,7 @@ class PostController extends \yii\web\Controller
 		$pagination = new Pagination([
 			'defaultPageSize' => 5,
 			'totalCount' => $query->count(),
+			'forcePageParam' => false,
 		]);
 		
 		$posts = $query->orderBy('create_time DESC')

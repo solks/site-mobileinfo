@@ -24,7 +24,8 @@
         "yiisoft/yii2-imagine": "^2.0",
         "alexandernst/yii2-device-detect": "*",
         "yiisoft/yii2-debug": "^2.0",
-        "yiisoft/yii2-bootstrap4": "^2.0"
+        "yiisoft/yii2-bootstrap4": "^2.0",
+        "davidhirtz/yii2-lazysizes": "*"
     },
     "require-dev": {
         "yiisoft/yii2-gii": "*",

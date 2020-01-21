@@ -26,10 +26,11 @@ class AppAsset extends AssetBundle
     public function init() {
     	parent::init();
     	
-		$this->css = ['css/site.css?v2.0b'];
+		$this->css = ['css/site.css?v2.0.1b'];
 		$this->depends = [
 			//'yii\web\YiiAsset',
 			'yii\bootstrap4\BootstrapAsset',
+			'davidhirtz\yii2\lazysizes\AssetBundle',
 		];
 		
 		Yii::$app->assetManager->bundles = [

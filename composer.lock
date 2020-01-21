@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "53273ba5e0dc586c337828545084bc5f",
+    "content-hash": "db12ba7dfc63239410f9156c8095c956",
     "packages": [
         {
             "name": "alexandernst/yii2-device-detect",
@@ -81,7 +81,7 @@
             "version": "3.3.11",
             "source": {
                 "type": "git",
-                "url": "https://github.com/RobinHerbots/Inputmask.git",
+                "url": "git@github.com:RobinHerbots/Inputmask.git",
                 "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "dist": {
@@ -140,6 +140,25 @@
             ]
         },
         {
+            "name": "bower-asset/lazysizes",
+            "version": "5.2.0",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:aFarkas/lazysizes.git",
+                "reference": "a2f37ec2371bff523ea8b94800682e4ec3596b9b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aFarkas/lazysizes/zipball/a2f37ec2371bff523ea8b94800682e4ec3596b9b",
+                "reference": "a2f37ec2371bff523ea8b94800682e4ec3596b9b",
+                "shasum": null
+            },
+            "type": "bower-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
             "name": "bower-asset/punycode",
             "version": "v1.3.2",
             "source": {
@@ -182,7 +201,7 @@
             "version": "2.0.7.1",
             "source": {
                 "type": "git",
-                "url": "git@github.com:yiisoft/jquery-pjax.git",
+                "url": "https://github.com/yiisoft/jquery-pjax.git",
                 "reference": "aef7b953107264f00234902a3880eb50dafc48be"
             },
             "dist": {
@@ -258,6 +277,48 @@
                 "markdown-extra"
             ],
             "time": "2018-03-26T11:24:36+00:00"
+        },
+        {
+            "name": "davidhirtz/yii2-lazysizes",
+            "version": "v2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/davidhirtz/yii2-lazysizes.git",
+                "reference": "053802828287f4c1a006c620df81322bdf185e43"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/davidhirtz/yii2-lazysizes/zipball/053802828287f4c1a006c620df81322bdf185e43",
+                "reference": "053802828287f4c1a006c620df81322bdf185e43",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/lazysizes": "*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "davidhirtz\\yii2\\lazysizes\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David Hirtz",
+                    "email": "hello@davidhirtz.com"
+                }
+            ],
+            "description": "High performance and SEO friendly lazy loader for images (responsive and normal), iframes and more, that detects any visibility changes triggered through user interaction, CSS or JavaScript without configuration.",
+            "keywords": [
+                " extension",
+                " lazysizes",
+                "yii2"
+            ],
+            "time": "2019-10-14T12:19:54+00:00"
         },
         {
             "name": "doctrine/lexer",
