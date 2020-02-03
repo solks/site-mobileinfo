@@ -25,6 +25,7 @@ $category = isset($_GET['category']) ? $_GET['category'] : 'samsung';
 	<?= Html::csrfMetaTags() ?>
 	<title><?= Html::encode($this->title) ?></title>
 	<?php $this->head() ?>
+
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -48,56 +49,56 @@ $category = isset($_GET['category']) ? $_GET['category'] : 'samsung';
 					<li>
 					<?php if ($category == 'samsung') {
 						echo Html::a('Samsung', Url::to(['post/index', 'category' => 'samsung']), ['class' => 'm-item active']);
-					?>				
+					?>
 						<div id="tag-nav" class="d-none d-md-block text-center tags-menu">
 							<?= NavTags::widget(); ?>
 						</div>
-					<?php } else 
-						echo Html::a('Samsung', Url::to(['post/index', 'category' => 'samsung']), ['class' => 'm-item']); 
+					<?php } else
+						echo Html::a('Samsung', Url::to(['post/index', 'category' => 'samsung']), ['class' => 'm-item']);
 					?>
 					</li>
 					<li>
 					<?php if ($category == 'nokia-microsoft') {
 						echo Html::a('Nokia/Microsoft', Url::to(['post/index', 'category' => 'nokia-microsoft']), ['class' => 'm-item active']);
-					?>				
+					?>
 						<div id="tag-nav" class="d-none d-md-block text-center tags-menu">
 							<?= NavTags::widget(); ?>
 						</div>
-					<?php } else 
-						echo Html::a('Nokia/Microsoft', Url::to(['post/index', 'category' => 'nokia-microsoft']), ['class' => 'm-item']); 
+					<?php } else
+						echo Html::a('Nokia/Microsoft', Url::to(['post/index', 'category' => 'nokia-microsoft']), ['class' => 'm-item']);
 					?>
 					</li>
 					<li>
 					<?php if ($category == 'lenovo') {
 						echo Html::a('Lenovo', Url::to(['post/index', 'category' => 'lenovo']), ['class' => 'm-item active']);
-					?>				
+					?>
 						<div id="tag-nav" class="d-none d-md-block text-center tags-menu">
 							<?= NavTags::widget(); ?>
 						</div>
-					<?php } else 
-						echo Html::a('Lenovo', Url::to(['post/index', 'category' => 'lenovo']), ['class' => 'm-item']); 
+					<?php } else
+						echo Html::a('Lenovo', Url::to(['post/index', 'category' => 'lenovo']), ['class' => 'm-item']);
 					?>
 					</li>
 					<li>
 					<?php if ($category == 'meizu') {
 						echo Html::a('Meizu', Url::to(['post/index', 'category' => 'meizu']), ['class' => 'm-item active']);
-					?>				
+					?>
 						<div id="tag-nav" class="d-none d-md-block text-center tags-menu">
 							<?= NavTags::widget(); ?>
 						</div>
-					<?php } else 
-						echo Html::a('Meizu', Url::to(['post/index', 'category' => 'meizu']), ['class' => 'm-item']); 
+					<?php } else
+						echo Html::a('Meizu', Url::to(['post/index', 'category' => 'meizu']), ['class' => 'm-item']);
 					?>
 					</li>
 					<li>
 					<?php if ($category == 'xiaomi') {
 						echo Html::a('Xiaomi', Url::to(['post/index', 'category' => 'xiaomi']), ['class' => 'm-item active']);
-					?>				
+					?>
 						<div id="tag-nav" class="d-none d-md-block text-center tags-menu">
 							<?= NavTags::widget(); ?>
 						</div>
-					<?php } else 
-						echo Html::a('Xiaomi', Url::to(['post/index', 'category' => 'xiaomi']), ['class' => 'm-item']); 
+					<?php } else
+						echo Html::a('Xiaomi', Url::to(['post/index', 'category' => 'xiaomi']), ['class' => 'm-item']);
 					?>
 					</li>
 				</ul>
@@ -175,7 +176,7 @@ $category = isset($_GET['category']) ? $_GET['category'] : 'samsung';
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-12 d-none d-sm-block posts-slider">
+			<div class="col-12 posts-slider">
 				<?= PostSlider::widget(['count' => 12]); ?>
 			</div>
 		</div>
@@ -185,42 +186,8 @@ $category = isset($_GET['category']) ? $_GET['category'] : 'samsung';
 			<footer>
 		</div>
 	</div>
-
 	<?php $this->endBody() ?>
-<!--<script type="text/javascript" src="http://www.google.ru/coop/cse/brand?form=cse-search-box&amp;lang=ru"></script>-->
-<script type="text/javascript">
-	function openMenu() {
-		var menuBox=document.getElementById("menu-list");
-		var tagBox=document.getElementById("tag-nav");
-		var searchBox=document.getElementById("site-search");
-		var headerBox=document.getElementById("head-nav");
-		if(menuBox.className.indexOf("categories-menu")==-1) {
-			menuBox.className="col-md d-none d-md-block categories-menu";
-			tagBox.className="d-none d-md-block text-center tags-menu";
-			headerBox.className="header";
-		} else {
-			searchBox.className="col-sm-4 col-md-3 d-none d-sm-block search-inline";
-			menuBox.className="col-12 order-last d-block d-md-none categories-dropdown";
-			tagBox.className="d-block d-md-none tags-dropdown";
-			headerBox.className="header-exp"
-		}
-		return;
-	}
-	function openSchForm() {
-		var menuBox=document.getElementById("menu-list");
-		var searchBox=document.getElementById("site-search");
-		var headerBox=document.getElementById("head-nav");
-		if(searchBox.className.indexOf("search-inline")==-1) {
-			searchBox.className="col-sm-4 col-md-3 d-none d-sm-block search-inline";
-			headerBox.className="header";
-		} else {
-			menuBox.className="col-md d-none d-md-block categories-menu";
-			searchBox.className="col-12 order-last d-block d-sm-none search-dropdown";
-			headerBox.className="header-exp"
-		}
-		return;
-	}
-</script>
+
 </body>
 </html>
 <?php $this->endPage() ?>

@@ -20,12 +20,12 @@
         "yiisoft/yii2-swiftmailer": "*",
         "vova07/yii2-imperavi-widget": "<=2.0.5",
         "yiisoft/yii2-jui": "*",
-        "evgeniyrru/yii2-slick": "*",
         "yiisoft/yii2-imagine": "^2.0",
         "alexandernst/yii2-device-detect": "*",
         "yiisoft/yii2-debug": "^2.0",
         "yiisoft/yii2-bootstrap4": "^2.0",
-        "davidhirtz/yii2-lazysizes": "*"
+        "davidhirtz/yii2-lazysizes": "*",
+        "dominus77/yii2-owl-carousel-2": "*"
     },
     "require-dev": {
         "yiisoft/yii2-gii": "*",

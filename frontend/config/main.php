@@ -25,6 +25,9 @@ return [
                 ],
             ],
         ],
+        'assetManager' => [
+            'appendTimestamp' => true,
+        ],
 		'view' => [
             'theme' => [
                 'basePath' => '@app/themes/desktop',

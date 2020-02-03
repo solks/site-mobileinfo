@@ -22,6 +22,7 @@ AppAsset::register($this);
 	<?= Html::csrfMetaTags() ?>
 	<title><?= Html::encode($this->title) ?></title>
 	<?php $this->head() ?>
+
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -111,7 +112,7 @@ AppAsset::register($this);
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-12 d-none d-sm-block posts-slider">
+			<div class="col-12 posts-slider">
 				<?= PostSlider::widget(['count' => 12]); ?>
 			</div>
 		</div>
@@ -121,39 +122,8 @@ AppAsset::register($this);
 			<footer>
 		</div>
 	</div>
-
 	<?php $this->endBody() ?>
-<!--<script type="text/javascript" src="http://www.google.ru/coop/cse/brand?form=cse-search-box&amp;lang=ru"></script>-->
-<script type="text/javascript">
-	function openMenu() {
-		var menuBox=document.getElementById("menu-list");
-		var searchBox=document.getElementById("site-search");
-		var headerBox=document.getElementById("head-nav");
-		if(menuBox.className.indexOf("categories-menu")==-1) {
-			menuBox.className= "col-md d-none d-md-block categories-menu";
-			headerBox.className = "header";
-		} else {
-			searchBox.className= "col-sm-4 col-md-3 d-none d-sm-block search-inline";
-			menuBox.className = "col-12 order-last d-block d-md-none categories-dropdown";
-			headerBox.className = "header-exp"
-		}
-		return;
-	}
-	function openSchForm() {
-		var menuBox=document.getElementById("menu-list");
-		var searchBox=document.getElementById("site-search");
-		var headerBox=document.getElementById("head-nav");
-		if(searchBox.className.indexOf("search-inline")==-1) {
-			searchBox.className= "col-sm-4 col-md-3 d-none d-sm-block search-inline";
-			headerBox.className = "header";
-		} else {
-			menuBox.className= "col-md d-none d-md-block categories-menu";
-			searchBox.className = "col-12 order-last d-block d-sm-none search-dropdown";
-			headerBox.className = "header-exp"
-		}
-		return;
-	}
-</script>
+
 </body>
 </html>
 <?php $this->endPage() ?>
