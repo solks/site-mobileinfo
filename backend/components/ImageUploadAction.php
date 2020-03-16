@@ -17,18 +17,18 @@ class ImageUploadAction extends UploadFileAction
     public $pathRes;
 
     public $urlRes;
-    
+
     public $filename;
-    
+
     public $max_height = 425;
-    
+
     /**
      * @inheritdoc
      */
     public function init()
     {
         parent::init();
-        
+
         if ($this->urlRes === null)
             $this->urlRes = $this->url;
         if ($this->pathRes === null)
@@ -46,14 +46,14 @@ class ImageUploadAction extends UploadFileAction
         	$this->filename = substr($result['filelink'], strrpos($result['filelink'], '/') + 1);
         else
         	$this->filename = $result['filename'];
-        
+
         $src = $this->path.$this->filename;
 		$image_src = Image::getImagine()->open($src);
-		
+
         $w_src = $image_src->getSize()->getWidth();
 		$h_src = $image_src->getSize()->getHeight();
 		$wh_prop = $w_src/$h_src;
-		
+
 		if(preg_match('/.*?Meizu.*?/isu', $this->filename)) {
 			$this->makeimage($image_src, 'Meizu-tpl.png', new Box(191, 339), new Box(212, 426),  new Point(11, 44));
 		} elseif (preg_match('/.*?Xiaomi.*?/isu', $this->filename)) {
@@ -66,38 +66,36 @@ class ImageUploadAction extends UploadFileAction
 			$this->makeimage($image_src, 'Lenovo-tpl.png', new Box(191, 339), new Box(225, 426),  new Point(17, 37));
 		} else {
 			$image_src->thumbnail(new Box(round($this->max_height*$w_src/$h_src), $this->max_height))
-				->save(Yii::getAlias($this->pathRes.$this->filename), ['quality' => 95]);
-			
+				->save(Yii::getAlias($this->pathRes.$this->filename), ['quality' => 94]);
+
 			//Small thumb
-			$image_src->thumbnail(new Box(75, 75), ManipulatorInterface::THUMBNAIL_OUTBOUND)
-			->save(Yii::getAlias($this->pathRes.'thumb/'.$this->filename), ['quality' => 92]);
+			$image_src->thumbnail(new Box(9, 17))->save(Yii::getAlias($this->pathRes.'thumb/'.$this->filename), ['quality' => 90]);
 			//Image::thumbnail($src, 225, 400)->save($destPath, ['quality' => 92]);
 		}
-		
-		copy(Yii::getAlias($this->pathRes.$this->filename), Yii::getAlias('@backend/web/images/content/').$this->filename);
-        
+
+		//copy(Yii::getAlias($this->pathRes.$this->filename), Yii::getAlias('@backend/web/images/content/').$this->filename);
+
         $result['filelink'] = $this->urlRes.$this->filename;
-        
+
         return $result;
     }
-    
+
     public function makeimage($image, $template, $screen_size, $img_size, $start_point) {
-    	
+
     	$dest_path = Yii::getAlias($this->pathRes.$this->filename);
 		$thumb_path = Yii::getAlias($this->pathRes.'thumb/'.$this->filename);
-		    		
+
     	//Resize and applying phone template
     	$resized = $image->thumbnail($screen_size);
 		$tpl = Image::getImagine()->open($this->path.$template);
-		
+
 		$imageRes = Image::getImagine()
 			->create($img_size)
 			->paste($resized, $start_point)
 			->paste($tpl, new Point(0, 0))
 			->save($dest_path, ['quality' => 94]);
-		
+
 		// Small thumb
-		$image->thumbnail(new Box(75, 75), ManipulatorInterface::THUMBNAIL_OUTBOUND)
-			->save($thumb_path, ['quality' => 92]);
+		$image->thumbnail(new Box(9, 17))->save($thumb_path, ['quality' => 90]);
     }
 }

@@ -26,7 +26,7 @@ AppAsset::register($this);
         <?php
             NavBar::begin([
                 'brandLabel' => 'Перейти на сайт',
-                'brandUrl' => 'http://infosmartphone.ru', //Yii::$app->homeUrl,
+                'brandUrl' => Yii::$app->urlManagerFrontend->baseUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',
                     'target' => '_blank',

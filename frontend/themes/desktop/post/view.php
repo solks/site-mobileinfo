@@ -1,26 +1,34 @@
 <?php
 /* @var $this yii\web\View */
-use yii\helpers\Html; 
+use yii\helpers\Html;
 ?>
 <div class="post">
 	<div class="intro">
 		<?= $post->intro ?>
 	</div>
 	<?php
-		$c_images = explode(';', $post->images);
-		
-		$i=1; 
-		while($i<=3 and $post->{'cont'.$i} != '') { 
+		$i=1;
+		while($i<=3 and $post->{'cont'.$i} != '') {
 	?>
 	<div class="row section">
-		<?php 
-			if (isset($c_images[$i-1]) and $c_images[$i-1] != '') {
-				$images = explode(',', $c_images[$i-1]);
-		?>
 		<div class="col-12 col-sm-auto section-image">
-			<?= $images[0]; ?>
+			<?php
+				//foreach (array_filter($post->postImages, function ($k) use ($i) { return (int) $k[0] == $i; }, ARRAY_FILTER_USE_KEY) as $image) {
+				//	echo '<img src="/images/content/'.$image['src'].'.jpg" alt ="'.$image['alt'].'">';
+				//}
+				if (isset($post->postImages[$i.'-0'])) {
+					$fname = $post->postImages[$i.'-0']['src'].'.jpg';
+					echo Html::img(
+						'/images/content/thumb/'.$fname,
+						[
+							'class' => 'lazyload',
+							'data-src' => '/images/content/'.$fname,
+							'alt' => $post->postImages[$i.'-0']['alt'],
+						]
+					);
+				}
+			?>
 		</div>
-		<?php } ?>
 		<div class="col-12 col-sm">
 			<?=	$post->{'cont'.$i}; ?>
 		</div>
@@ -47,7 +55,7 @@ use yii\helpers\Html;
 	<?php } ?>
 	<div class="post-nav">
 		<b>Теги:</b>
-		<?php 
+		<?php
 			foreach($post->ActiveTags as $key => $val)
 				echo Html::a($key, $val).', ';
 		?>
@@ -62,7 +70,7 @@ use yii\helpers\Html;
 		<?= $this->render('_commentForm', [
 				'model'=>$newComment,
 		]); ?>
-	
+
 		<?php foreach($post->comments as $comment): ?>
 			<div class="comment-wrap">
 				<div class="cid">

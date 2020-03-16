@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use app\models\Post;
 use app\models\Category;
+use app\models\PostImage;
 use app\models\Tag;
 use app\models\Comment;
 use app\models\Stat;

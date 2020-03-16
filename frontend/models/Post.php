@@ -89,7 +89,14 @@ class Post extends \yii\db\ActiveRecord
         return $this->hasMany(Comment::className(), ['post_id' => 'id'])
         	->count();
     }
-    public function getCountry()
+
+    public function getPostImages()
+    {
+        return $this->hasMany(PostImage::className(), ['post_id' => 'id'])
+        	->indexBy(function ($row) { return $row['cont_id'].'-'.$row['idx'];})->asArray();
+    }
+    
+    public function getCategory()
 	{
 		return $this->hasOne(Category::className(), ['cat_alias' => 'category']);
 	}

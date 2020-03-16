@@ -3,37 +3,32 @@
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 
-//$t = "Настройка {$categoryName}, Android";
-//$t = "";
-//if(!empty($tagName)) {
-//	$this->title = $tagName.' - '.$t;
-//	echo '<h1 class="page-title">'.$tagName.'</h1>';
-//} else {
-//	$this->title = $t; 
-//	echo '<h1 class="page-title">'.$categoryName.'</h1>';
-//}
-
 $i = 1;
-?>
-<?php foreach ($posts as $data) { ?>
+
+foreach ($posts as $data) { ?>
 <div class="item">
 	<div class="item-title">
-		<?= Html::a(Html::encode($data->title), $data->url); ?>
+		<?= Html::a($data->title, $data->url); ?>
 		<?php if (!empty($data->video)) { ?>
 		<a href="<?= $data->url ?>#video" class="video-btn"><span class="video-icon"></span></a>
 		<?php } ?>
 	</div>
 	<div class="row section">
-		<?php 
-			$c_images = explode(';', $data->images);
-		
-			if (isset($c_images[0]) and $c_images[0] != '') { 
-				$images = explode(',', $c_images[0]);
-		?>
 		<div class="col-12 col-sm-auto section-image">
-			<?= $images[0]; ?>
+			<?php
+				if (isset($data->postImages['1-0'])) {
+					$fname = $data->postImages['1-0']['src'].'.jpg';
+					echo Html::img(
+						'/images/content/thumb/'.$fname,
+						[
+							'class' => 'lazyload',
+							'data-src' => '/images/content/'.$fname,
+							'alt' => $data->postImages['1-0']['alt'],
+						]
+					);
+				}
+			?>
 		</div>
-		<?php } ?>
 		<div class="col-12 col-sm">
 			<?=	$data->cont1; ?>
 			<div class="readmore"><?= Html::a('Подробнее', $data->url, ['class' => 'btn btn-default']); ?></div>
@@ -46,7 +41,7 @@ $i = 1;
 		<div class="col-12 col-lg">
 			<div class="item-nav">
 				<b>Теги:</b>
-				<?php 
+				<?php
 					foreach($data->ActiveTags as $key => $val)
 						echo Html::a($key, $val).', ';
 				?>

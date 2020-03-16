@@ -5,6 +5,7 @@ namespace backend\models;
 use Yii;
 use backend\components\myInflector;
 use backend\models\Tag;
+use backend\models\PostImage;
 use yii\helpers\Html;
 
 /**
@@ -33,7 +34,7 @@ use yii\helpers\Html;
 class Post extends \yii\db\ActiveRecord
 {
     private $_oldTags;
-    
+
     /**
      * @inheritdoc
      */
@@ -81,42 +82,42 @@ class Post extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getComments()
     {
         return $this->hasMany(Comment::className(), ['post_id' => 'id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+    public function getPostImages()
+    {
+        return $this->hasMany(PostImage::className(), ['post_id' => 'id'])
+        	->indexBy(function ($row) { return $row['cont_id'].'-'.$row['idx'];})->asArray();
+    }
+
     public function getAuthor()
     {
         return $this->hasOne(TblUser::className(), ['id' => 'author_id']);
     }
-    
+
     public function afterFind()
 	{
 		parent::afterFind();
-		
-		$images = explode(';', $this->images);
-		
+
 		for ($i=1; $i<4; $i++) {
-			if(isset($images[$i-1]) and $images[$i-1] != '')  {
-				
-				$cont_images = explode(',', $images[$i-1]);
-				
+			$images = array_filter($this->postImages, function ($k) use ($i) { return (int) $k[0] == $i; }, ARRAY_FILTER_USE_KEY);
+			// add images to content
+			if(isset($images))  {
 				$this->{'cont'.$i} .= "\n";
-				foreach ($cont_images as $img) {
-					$this->{'cont'.$i} .= ' '.$img;
+				foreach ($images as $img) {
+					$this->{'cont'.$i} .= Html::img(
+						Yii::$app->params['baseUrl'].'/images/content/'.$img['src'].'.jpg',
+						['alt' => $img['alt']]
+					);
 				}
 			}
 		}
-		
+
 	}
-    
+
     public function beforeSave($insert)
 	{
     	if (parent::beforeSave($insert)) {
@@ -125,59 +126,73 @@ class Post extends \yii\db\ActiveRecord
     	    	//$this->author_id=Yii::app()->user->id;
     	    } else
     	    	$this->update_time=time();
-    	    
+
     	    if($this->alias == '') {
-    	    	//Yii::$classMap['mycomponents\myInflector'] = '@vendor/mycomponents/myInflector.php';
-				$this->alias = myInflector::slug($this->title);
+    	    	$this->alias = myInflector::slug($this->title);
 			}
-			
+
 			$tagsArr = array_unique(explode(',', $this->tags));
 			foreach ($tagsArr as $key => $tag)
 				$tagsArr[$key] = myInflector::slug(trim($tag));
 			$this->t_tags = implode(', ', $tagsArr);
-			
+
 			$this->images = '';
-			
-			$baseUrl = Yii::$app->params['baseUrl'];
+
 			for ($i=1; $i<4; $i++) {
-				if (preg_match_all("#<img[^>]*>#isu", $this->{'cont'.$i}, $images)) {
-					//clean style attribute
-					$images[0] = preg_replace('#style="[^"]+"#isu', '', $images[0]);
-					//clean delimiters
-					$images[0] = preg_replace('#[,;]"#isu', '-', $images[0]);
-					
-					if ($i > 1) $this->images .= ';';
-					$this->images .= implode(',', $images[0]);
-					
+				$n = -1;
+				if (preg_match_all('#<img[^>]+>#isu', $this->{'cont'.$i}, $imageTags, PREG_PATTERN_ORDER)) {
+        			foreach ($imageTags[0] as $n => $tag) {
+        				preg_match('#src="[^"]*\/([^"\/]+)\.([\w]+)"#isu', $tag, $src);
+        				preg_match('#alt="([^"]*)"#isu', $tag, $alt);
+						$size = getimagesize(Yii::getAlias('@frontend/web/images/content/').$src.'.jpg');
+
+						if (($imageModel = PostImage::findOne(['post_id' => $this->id, 'cont_id' => $i, 'idx' => $n])) == null)
+							$imageModel = new PostImage(['post_id' => $this->id, 'cont_id' => $i, 'idx' => $n]);
+
+        				$imageModel->src = $src[1];
+        				$imageModel->alt = $alt[1];
+						$imageModel->width = $size[0];
+			            $imageModel->height = $size[1];
+
+        				if (!$imageModel->save()) return false;
+        			}
+
 					//delete image from content
 					$this->{'cont'.$i} = preg_replace('#<img[^>]+>#isu', '',  $this->{'cont'.$i});
 					$this->{'cont'.$i} = preg_replace('#<p>\s*?</p>#isu', '',  $this->{'cont'.$i});
 				}
+
+				//clear excess db records
+				$imageRecords = PostImage::find()->where(['post_id' => $this->id])
+					->andWhere(['cont_id' => $i])
+					->andWhere(['>', 'idx', $n])
+					->all();
+		        foreach ($imageRecords as $record)
+							$record->delete();
 			}
-    	    
+
     	    return true;
     	} else {
     	    return false;
     	}
 	}
-	
+
 	public function afterSave($insert, $changedAttributes)
 	{
 		parent::afterSave($insert, $changedAttributes);
-		//Yii::info(print_r($changedAttributes, true));
-		
+
 		$tagModel = new Tag;
 		$tagModel->category = $this->category;
 		if (isset($changedAttributes['tags'])) {
 			$tagModel->updateFrequency($changedAttributes['tags'], $this->tags);
-		} else 
+		} else
 			$tagModel->updateFrequency('', $this->tags);
 	}
-	
+
 	public function afterDelete()
 	{
 		parent::afterDelete();
-		
+
 		$tagModel = new Tag;
 		$tagModel->category = $this->category;
 		$tagModel->updateFrequency($this->tags, '');

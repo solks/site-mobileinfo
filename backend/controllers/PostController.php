@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use backend\models\Post;
 use backend\models\PostSearch;
+use backend\models\PostImage;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
@@ -23,7 +24,7 @@ class PostController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'imageget', 'imageupload'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'imageget', 'imageupload', 'parsing'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -37,7 +38,7 @@ class PostController extends Controller
             ],
         ];
     }
-    
+
     public function actions()
     {
         return [
@@ -52,7 +53,7 @@ class PostController extends Controller
             	'path' => '@frontend/web/images/content/origin/',
             	'urlRes' => Yii::$app->params['baseUrl'].'/images/content/',
             	'pathRes' => '@frontend/web/images/content/',
-            	'unique' => false,
+            	'unique' => true,
         	],
         ];
     }
