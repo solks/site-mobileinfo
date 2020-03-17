@@ -58,25 +58,14 @@ $category = isset($_GET['category']) ? $_GET['category'] : 'samsung';
 					?>
 					</li>
 					<li>
-					<?php if ($category == 'nokia-microsoft') {
-						echo Html::a('Nokia/Microsoft', Url::to(['post/index', 'category' => 'nokia-microsoft']), ['class' => 'm-item active']);
+					<?php if ($category == 'huawei-honor') {
+						echo Html::a('Huawei/Honor', Url::to(['post/index', 'category' => 'huawei-honor']), ['class' => 'm-item active']);
 					?>
 						<div id="tag-nav" class="d-none d-md-block text-center tags-menu">
 							<?= NavTags::widget(); ?>
 						</div>
 					<?php } else
-						echo Html::a('Nokia/Microsoft', Url::to(['post/index', 'category' => 'nokia-microsoft']), ['class' => 'm-item']);
-					?>
-					</li>
-					<li>
-					<?php if ($category == 'lenovo') {
-						echo Html::a('Lenovo', Url::to(['post/index', 'category' => 'lenovo']), ['class' => 'm-item active']);
-					?>
-						<div id="tag-nav" class="d-none d-md-block text-center tags-menu">
-							<?= NavTags::widget(); ?>
-						</div>
-					<?php } else
-						echo Html::a('Lenovo', Url::to(['post/index', 'category' => 'lenovo']), ['class' => 'm-item']);
+						echo Html::a('Huawei/Honor', Url::to(['post/index', 'category' => 'huawei-honor']), ['class' => 'm-item']);
 					?>
 					</li>
 					<li>
@@ -99,6 +88,28 @@ $category = isset($_GET['category']) ? $_GET['category'] : 'samsung';
 						</div>
 					<?php } else
 						echo Html::a('Xiaomi', Url::to(['post/index', 'category' => 'xiaomi']), ['class' => 'm-item']);
+					?>
+					</li>
+					<li>
+					<?php if ($category == 'lenovo') {
+						echo Html::a('Lenovo', Url::to(['post/index', 'category' => 'lenovo']), ['class' => 'm-item active']);
+					?>
+						<div id="tag-nav" class="d-none d-md-block text-center tags-menu">
+							<?= NavTags::widget(); ?>
+						</div>
+					<?php } else
+						echo Html::a('Lenovo', Url::to(['post/index', 'category' => 'lenovo']), ['class' => 'm-item']);
+					?>
+					</li>
+					<li>
+					<?php if ($category == 'nokia-microsoft') {
+						echo Html::a('Nokia/Microsoft', Url::to(['post/index', 'category' => 'nokia-microsoft']), ['class' => 'm-item active']);
+					?>
+						<div id="tag-nav" class="d-none d-md-block text-center tags-menu">
+							<?= NavTags::widget(); ?>
+						</div>
+					<?php } else
+						echo Html::a('Nokia/Microsoft', Url::to(['post/index', 'category' => 'nokia-microsoft']), ['class' => 'm-item']);
 					?>
 					</li>
 				</ul>

@@ -45,10 +45,11 @@ AppAsset::register($this);
 			<div id="menu-list" class="col-md d-none d-md-block categories-menu">
 				<ul class="categories">
 					<li><?= Html::a('Samsung', Url::to(['post/index', 'category' => 'samsung']), ['class' => 'm-item']); ?></li>
-					<li><?= Html::a('Nokia/Microsoft', Url::to(['post/index', 'category' => 'nokia-microsoft']), ['class' => 'm-item']); ?></li>
-					<li><?= Html::a('Lenovo', Url::to(['post/index', 'category' => 'lenovo']), ['class' => 'm-item']); ?></li>
+					<li><?= Html::a('Huawei/Honor', Url::to(['post/index', 'category' => 'huawei-honor']), ['class' => 'm-item']); ?></li>
 					<li><?= Html::a('Meizu', Url::to(['post/index', 'category' => 'meizu']), ['class' => 'm-item']); ?></li>
 					<li><?= Html::a('Xiaomi', Url::to(['post/index', 'category' => 'xiaomi']), ['class' => 'm-item']); ?></li>
+					<li><?= Html::a('Nokia/Microsoft', Url::to(['post/index', 'category' => 'nokia-microsoft']), ['class' => 'm-item']); ?></li>
+					<li><?= Html::a('Lenovo', Url::to(['post/index', 'category' => 'lenovo']), ['class' => 'm-item']); ?></li>
 				</ul>
 			</div>
 			<div class="col d-block d-md-none">

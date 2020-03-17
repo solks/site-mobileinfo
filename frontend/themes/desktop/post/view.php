@@ -24,6 +24,8 @@ use yii\helpers\Html;
 							'class' => 'lazyload',
 							'data-src' => '/images/content/'.$fname,
 							'alt' => $post->postImages[$i.'-0']['alt'],
+							'width' => $post->postImages[$i.'-0']['width'],
+							'height' => $post->postImages[$i.'-0']['height'],
 						]
 					);
 				}

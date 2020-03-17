@@ -24,6 +24,8 @@ foreach ($posts as $data) { ?>
 							'class' => 'lazyload',
 							'data-src' => '/images/content/'.$fname,
 							'alt' => $data->postImages['1-0']['alt'],
+							'width' => $data->postImages[$i.'-0']['width'],
+							'height' => $data->postImages[$i.'-0']['height'],
 						]
 					);
 				}
