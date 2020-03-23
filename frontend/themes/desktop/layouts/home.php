@@ -19,21 +19,33 @@ AppAsset::register($this);
 <head>
 	<meta charset="<?= Yii::$app->charset ?>"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap&subset=cyrillic" rel="stylesheet">
+	<link rel="preconnect" href="http://www.google-analytics.com">
+	<link rel="preconnect" href="https://pagead2.googlesyndication.com">
+	<link rel="preconnect" href="https://tpc.googlesyndication.com">
+	<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<?= Html::csrfMetaTags() ?>
 	<title><?= Html::encode($this->title) ?></title>
 	<?php $this->head() ?>
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	<style type="text/css">
+		@font-face {
+			font-family: 'Roboto'; font-style: normal; font-weight: 300; font-display: swap;
+			src: local('Roboto Light'), local('Roboto-Light'), url('/fonts/roboto-300.woff2') format('woff2'), url('/fonts/roboto-300.woff') format('woff');}
+		@font-face {
+			font-family: 'Roboto'; font-style: normal; font-weight: 400; font-display: swap;
+			src: local('Roboto'), local('Roboto-Regular'), url('/fonts/roboto-regular.woff2') format('woff2'), url('/fonts/roboto-regular.woff') format('woff');}
+	</style>
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-20779895-8', 'auto');
-  ga('send', 'pageview');
+	  ga('create', 'UA-20779895-8', 'auto');
+	  ga('send', 'pageview');
 
-</script>
+	</script>
 </head>
 <body>
 	<?php $this->beginBody() ?>

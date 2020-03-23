@@ -53,7 +53,7 @@ class PostController extends Controller
             	'path' => '@frontend/web/images/content/origin/',
             	'urlRes' => Yii::$app->params['baseUrl'].'/images/content/',
             	'pathRes' => '@frontend/web/images/content/',
-            	'unique' => true,
+            	'unique' => false,
         	],
         ];
     }

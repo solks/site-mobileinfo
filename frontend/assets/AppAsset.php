@@ -27,11 +27,12 @@ class AppAsset extends AssetBundle
     	parent::init();
     	
 		$this->css = ['css/site.css'];
-		$this->js = ['js/bundled.js'];
+		$this->js = ['js/bundled.js', 'js/lazysizes.min.js'];
+		$this->jsOptions = ['async' => true];
 		
 		$this->depends = [
 			'yii\web\JqueryAsset',
-			'davidhirtz\yii2\lazysizes\AssetBundle',
+			//'davidhirtz\yii2\lazysizes\AssetBundle',
 			//'yii\bootstrap4\BootstrapAsset',
 			//'frontend\components\OwlCarouselAsset',
 		];

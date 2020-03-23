@@ -35,6 +35,8 @@ class Post extends \yii\db\ActiveRecord
 {
     private $_oldTags;
 
+	public $imageTags = [];
+
     /**
      * @inheritdoc
      */
@@ -136,39 +138,12 @@ class Post extends \yii\db\ActiveRecord
 				$tagsArr[$key] = myInflector::slug(trim($tag));
 			$this->t_tags = implode(', ', $tagsArr);
 
-			$this->images = '';
-
 			for ($i=1; $i<4; $i++) {
-				$n = -1;
-				if (preg_match_all('#<img[^>]+>#isu', $this->{'cont'.$i}, $imageTags, PREG_PATTERN_ORDER)) {
-        			foreach ($imageTags[0] as $n => $tag) {
-        				preg_match('#src="[^"]*\/([^"\/]+)\.([\w]+)"#isu', $tag, $src);
-        				preg_match('#alt="([^"]*)"#isu', $tag, $alt);
-						$size = getimagesize(Yii::getAlias('@frontend/web/images/content/').$src.'.jpg');
-
-						if (($imageModel = PostImage::findOne(['post_id' => $this->id, 'cont_id' => $i, 'idx' => $n])) == null)
-							$imageModel = new PostImage(['post_id' => $this->id, 'cont_id' => $i, 'idx' => $n]);
-
-        				$imageModel->src = $src[1];
-        				$imageModel->alt = $alt[1];
-						$imageModel->width = $size[0];
-			            $imageModel->height = $size[1];
-
-        				if (!$imageModel->save()) return false;
-        			}
-
+				if (preg_match_all('#<img[^>]+>#isu', $this->{'cont'.$i}, $this->imageTags[$i], PREG_PATTERN_ORDER)) {
 					//delete image from content
 					$this->{'cont'.$i} = preg_replace('#<img[^>]+>#isu', '',  $this->{'cont'.$i});
 					$this->{'cont'.$i} = preg_replace('#<p>\s*?</p>#isu', '',  $this->{'cont'.$i});
 				}
-
-				//clear excess db records
-				$imageRecords = PostImage::find()->where(['post_id' => $this->id])
-					->andWhere(['cont_id' => $i])
-					->andWhere(['>', 'idx', $n])
-					->all();
-		        foreach ($imageRecords as $record)
-							$record->delete();
 			}
 
     	    return true;
@@ -187,6 +162,13 @@ class Post extends \yii\db\ActiveRecord
 			$tagModel->updateFrequency($changedAttributes['tags'], $this->tags);
 		} else
 			$tagModel->updateFrequency('', $this->tags);
+
+		for ($i=1; $i<4; $i++) {
+			if (($imageModel = PostImage::findOne(['post_id' => $this->id, 'cont_id' => $i, 'idx' => 0])) == null)
+				$imageModel = new PostImage(['post_id' => $this->id, 'cont_id' => $i, 'idx' => 0]);
+
+			$imageModel->updateRecords($this->imageTags[$i][0]);
+		}
 	}
 
 	public function afterDelete()
@@ -196,5 +178,10 @@ class Post extends \yii\db\ActiveRecord
 		$tagModel = new Tag;
 		$tagModel->category = $this->category;
 		$tagModel->updateFrequency($this->tags, '');
+
+		for ($i=1; $i<4; $i++) {
+			if (($imageModel = PostImage::findOne(['post_id' => $this->id, 'cont_id' => $i, 'idx' => 0])) != null)
+				$imageModel->updateRecords([]);
+		}
 	}
 }

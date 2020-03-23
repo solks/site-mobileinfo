@@ -15,16 +15,23 @@ $i = 1;
 		<?php } ?>
 	</div>
 	<div class="row section">
-		<?php 
-			$c_images = explode(';', $data->images);
-		
-			if (isset($c_images[0]) and $c_images[0] != '') { 
-				$images = explode(',', $c_images[0]);
-		?>
 		<div class="col-12 col-sm-auto section-image">
-			<?= $images[0]; ?>
+			<?php
+				if (isset($data->postImages['1-0'])) {
+					$fname = $data->postImages['1-0']['src'].'.jpg';
+					echo Html::img(
+						'/images/content/thumb/'.$fname,
+						[
+							'class' => 'lazyload',
+							'data-src' => '/images/content/'.$fname,
+							'alt' => $data->postImages['1-0']['alt'],
+							'width' => $data->postImages['1-0']['width'],
+							'height' => $data->postImages['1-0']['height'],
+						]
+					);
+				}
+			?>
 		</div>
-		<?php } ?>
 		<div class="col-12 col-sm">
 			<?=	$data->cont1; ?>
 			<div class="readmore"><?= Html::a('Подробнее', $data->url, ['class' => 'btn btn-default']); ?></div>

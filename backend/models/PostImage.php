@@ -46,4 +46,54 @@ class PostImage extends \yii\db\ActiveRecord
             'alt' => 'Image alt',
         ];
     }
+
+	public function parceTag($tag) {
+		$data = ['src' => '', 'alt' => '', 'width' => 0, 'height' => 0];
+
+		preg_match('#src="[^"]*\/([^"\/]+)\.([\w]+)"#isu', $tag, $src);
+		preg_match('#alt="([^"]*)"#isu', $tag, $alt);
+		$data['src'] = $src[1];
+		if (isset($alt[1]))
+			$data['alt'] = $alt[1];
+
+		$size = getimagesize(Yii::getAlias('@frontend/web/images/content/').$src[1].'.jpg');
+		$data['width'] = $size[0];
+		$data['height'] = $size[1];
+
+		return $data;
+	}
+
+	public function updateRecords($images)
+	{
+		$count = count($images);
+
+		if ($count == 1) {
+			$imageData = $this->parceTag($images[0]);
+
+			$this->src = $imageData['src'];
+			$this->alt = $imageData['alt'];
+			$this->width = $imageData['width'];
+			$this->height = $imageData['height'];
+
+			if (!$this->save()) return false;
+
+		} elseif ($count > 1) {
+			foreach ($images as $n => $image) {
+				$imageData = $this->parceTag($image);
+
+				$model = new PostImage(['post_id' => $this->post_id, 'cont_id' => $this->cont_id, 'idx' => $n]);
+
+				$model->src = $imageData['src'];
+				$model->alt = $imageData['alt'];
+				$model->width = $imageData['width'];
+				$model->height = $imageData['height'];
+
+				if (!$model->save()) return false;
+			}
+		}
+
+		//clear excess db records
+		$maxIdx = $count-1;
+		$this->deleteAll("`post_id` = $this->post_id and `cont_id` = $this->cont_id and `idx` > $maxIdx");
+	}
 }

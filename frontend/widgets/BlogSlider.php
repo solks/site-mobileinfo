@@ -24,8 +24,17 @@ class BlogSlider extends Widget
 
     	foreach ($rows as $row) {
     		$articleUrl = Url::to(['blog/view', 'id' => $row['id'], 'title' => $row['alias']]);
+			$img = json_decode($row['preview_img'], true);
 
-			$item = Html::img($row['preview_img'], ['class' => 'blog-slider-img'])
+			$item = Html::img(
+					'/images/blog/thumb/'.$img['src'].'.jpg',
+					[
+						'class' => 'blog-slider-img lazyload',
+						'data-src' => '/images/blog/'.$img['src'].'.jpg',
+						'width' => $img['width'],
+						'height' => $img['height'],
+					]
+				)
 				.'<div class="blog-slider-intro">'
 				.'<h3 class="blog-slider-title">'.Html::a($row['title'], $articleUrl).'</h3>'
 				.$row['intro']

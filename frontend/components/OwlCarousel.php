@@ -5,6 +5,7 @@ namespace frontend\components;
 use Yii;
 use yii\base\Widget;
 use yii\web\JsExpression;
+use yii\web\View;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use dominus77\owlcarousel2\Carousel;
@@ -48,18 +49,11 @@ class OwlCarousel extends Carousel
             OwlAnimateCssAsset::register($view);
         }
 
-        if (!empty($this->clientScript)) {
-            $script = new JsExpression("
-                var owl = $('#{$this->_id}');
-                owl.owlCarousel({$options});
-            ");
-            $view->registerJs($script);
-            $view->registerJs($this->clientScript);
-        } else {
-            $script = new JsExpression("
-                $('#{$this->_id}').owlCarousel({$options});
-            ");
-            $view->registerJs($script);
-        }
+		// Temporary move to bundled.js
+		// $script = new JsExpression("$('#{$this->_id}').owlCarousel({$options});");
+		// $view->registerJs($script);
+
+		if (!empty($this->clientScript))
+			$view->registerJs($this->clientScript);
     }
 }
