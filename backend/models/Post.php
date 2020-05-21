@@ -20,7 +20,6 @@ use yii\helpers\Html;
  * @property string $cont2
  * @property string $cont3
  * @property string $video
- * @property string $preview_img
  * @property string $tags
  * @property string $t_tags
  * @property integer $status
@@ -73,7 +72,6 @@ class Post extends \yii\db\ActiveRecord
             'cont1' => 'Шаг 1',
             'cont2' => 'Шаг 2',
             'cont3' => 'Шаг 3',
-            'images' => 'Content imageg',
             'video' => 'Youtube видео',
             'tags' => 'Теги',
             't_tags' => 'T Tags',

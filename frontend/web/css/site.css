@@ -14,7 +14,7 @@ strong {font-weight: 400;}
 /*Page layout*/
 .header {position: fixed; top: 0; right: 0; left: 0; z-index: 1030; min-width:320px; height: 56px; padding: 0; background-color: #313D48;
 	border-bottom: #4399BC 1px solid;}
-.header-exp {position: fixed; top: 0; right: 0; bottom:0; left: 0; z-index: 1030;
+.header-exp {position: fixed; overflow-y: scroll; top: 0; right: 0; bottom:0; left: 0; z-index: 1030;
 	padding: 0; background: rgba(27,41,53,.9);}
 .footer-wrapper { background-color: #FAFAFA; border-top: #EEE 1px solid; padding-top: 30px;}
 .footer {padding: 20px; text-align: center; color: #ffffff; background-color: #313D48; border-top: #0099CC 2px solid;}

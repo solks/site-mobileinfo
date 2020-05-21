@@ -1,6 +1,8 @@
 <?php
 /* @var $this yii\web\View */
 use yii\helpers\Html;
+
+$this->title = $post->title;
 ?>
 <div class="post">
 	<div class="intro">

@@ -31,6 +31,8 @@ use Imagine\Image\Point;
 class Blog extends \yii\db\ActiveRecord
 {
     public $imageFile;
+
+    public $img = [];
     
     // Filepath to save uploaded image 
     public $filePath = '@frontend/web/images/blog';
@@ -115,6 +117,12 @@ class Blog extends \yii\db\ActiveRecord
 	    	//Yii::$classMap['mycomponents\myInflector'] = '@vendor/mycomponents/myInflector.php';
 			$this->alias = myInflector::slug($this->title);
 		}
+
+		if ($this->imageFile) {
+			$this->img['src'] = substr($this->imageFile->name, 0, strrpos($this->imageFile->name, '.'));
+			$this->resizeImage();
+			$this->preview_img = json_encode($this->img);
+		}
 		
 		//$baseUrl = Yii::$app->params['baseUrl'];			
 	    
@@ -143,6 +151,8 @@ class Blog extends \yii\db\ActiveRecord
 	
 			$w_src = $image_src->getSize()->getWidth();
 			$h_src = $image_src->getSize()->getHeight();
+			$this->img['width'] = $w_src;
+			$this->img['height'] = $h_src;
 
 			if ($h_src > 200) {
 				$h = 200;
@@ -152,8 +162,11 @@ class Blog extends \yii\db\ActiveRecord
 				$image_src->thumbnail(new Box($w, $h), ManipulatorInterface::THUMBNAIL_OUTBOUND)
 					->save(Yii::getAlias(Yii::getAlias($this->filePath).'/'.$fileName), ['quality' => 94]);
 				//Small thumb
-				$image_src->thumbnail(new Box(75, 75), ManipulatorInterface::THUMBNAIL_OUTBOUND)
-					->save(Yii::getAlias(Yii::getAlias($this->filePath).'/thumb/'.$fileName), ['quality' => 92]);
+				$image_src->thumbnail(new Box(13, 10), ManipulatorInterface::THUMBNAIL_OUTBOUND)
+					->save(Yii::getAlias(Yii::getAlias($this->filePath).'/thumb/'.$fileName), ['quality' => 90]);
+
+				$this->img['width'] = $w;
+				$this->img['height'] = $h;
 			}
 		}
 	}

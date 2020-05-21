@@ -36,6 +36,7 @@ class PostSlider extends Widget
 
 		return OwlCarousel::widget([
 			'items' => $items,
+			'id' => 'w-pslider',
 			//'tag' => 'div', // container tag name, default div
 			//'containerOptions' => [/* ... */], // container html options
 			'clientOptions' => [

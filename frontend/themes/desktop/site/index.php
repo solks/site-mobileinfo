@@ -3,10 +3,11 @@
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 
-$i = 1;
-?>
+$this->title = 'Настройка смартфонов, Android';
 
-<?php foreach ($posts as $data) { ?>
+$i = 1;
+
+foreach ($posts as $data) { ?>
 <div class="item">
 	<div class="item-title">
 		<?= Html::a(Html::encode($data->title), $data->url); ?>

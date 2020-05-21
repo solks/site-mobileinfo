@@ -25,8 +25,6 @@ AppAsset::register($this);
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<?= Html::csrfMetaTags() ?>
 	<title><?= Html::encode($this->title) ?></title>
-	<?php $this->head() ?>
-
 	<style type="text/css">
 		@font-face {
 			font-family: 'Roboto'; font-style: normal; font-weight: 300; font-display: swap;
@@ -35,6 +33,8 @@ AppAsset::register($this);
 			font-family: 'Roboto'; font-style: normal; font-weight: 400; font-display: swap;
 			src: local('Roboto'), local('Roboto-Regular'), url('/fonts/roboto-regular.woff2') format('woff2'), url('/fonts/roboto-regular.woff') format('woff');}
 	</style>
+	<?php $this->head() ?>
+
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -55,12 +55,17 @@ AppAsset::register($this);
 			</div>
 			<div id="menu-list" class="col-md d-none d-md-block categories-menu">
 				<ul class="categories">
-					<li><?= Html::a('Samsung', Url::to(['post/index', 'category' => 'samsung']), ['class' => 'm-item']); ?></li>
-					<li><?= Html::a('Huawei/Honor', Url::to(['post/index', 'category' => 'huawei-honor']), ['class' => 'm-item']); ?></li>
-					<li><?= Html::a('Meizu', Url::to(['post/index', 'category' => 'meizu']), ['class' => 'm-item']); ?></li>
-					<li><?= Html::a('Xiaomi', Url::to(['post/index', 'category' => 'xiaomi']), ['class' => 'm-item']); ?></li>
-					<li><?= Html::a('Nokia/Microsoft', Url::to(['post/index', 'category' => 'nokia-microsoft']), ['class' => 'm-item']); ?></li>
-					<li><?= Html::a('Lenovo', Url::to(['post/index', 'category' => 'lenovo']), ['class' => 'm-item']); ?></li>
+				<?php
+					foreach ($this->params['categories'] as $category) {
+						echo '<li>';
+						echo Html::a(
+							$category['cat_title'],
+							Url::to(['post/index', 'category' => $category['cat_alias']]),
+							['class' => 'm-item']
+						);
+						echo '</li>';
+					}
+				?>
 				</ul>
 			</div>
 			<div class="col d-block d-md-none">
@@ -126,7 +131,12 @@ AppAsset::register($this);
 		</div>
 		<div class="row">
 			<div class="col-12 posts-slider">
-				<?= PostSlider::widget(['count' => 12]); ?>
+				<?php
+					if ($this->beginCache('pslider', ['duration' => 3600])) {
+						echo PostSlider::widget(['count' => 12]);
+						$this->endCache();
+					}
+				?>
 			</div>
 		</div>
 		<div class="row footer-wrapper">

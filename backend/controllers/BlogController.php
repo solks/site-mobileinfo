@@ -54,6 +54,7 @@ class BlogController extends Controller
             	'urlRes' => Yii::$app->params['baseUrl'].'/images/blog/',
             	'pathRes' => '@frontend/web/images/blog/',
             	'unique' => false,
+            	'replace' => true,
         	],
         ];
     }
@@ -97,15 +98,10 @@ class BlogController extends Controller
 		if ($model->load(Yii::$app->request->post())) {
 			$model->imageFile = UploadedFile::getInstance($model, 'imageFile');
 			
-			if ($model->imageFile)
-				$model->preview_img = $model->fileUrl.'/'.$model->imageFile->name;
-			
-			if ($model->save()) {
-				$model->resizeImage();
-				
+			if ($model->save())
 				return $this->redirect(['index']);
-			} else
-        		return $this->render('error');
+			else
+        			return $this->render('error');
 		}
 		
 		return $this->render('create', [
@@ -126,15 +122,10 @@ class BlogController extends Controller
         if ($model->load(Yii::$app->request->post())) {
         	$model->imageFile = UploadedFile::getInstance($model, 'imageFile');
         	
-			if ($model->imageFile)
-				$model->preview_img = $model->fileUrl.'/'.$model->imageFile->name;
-			
-        	if ($model->save()) {
-				$model->resizeImage();
-					
-        		return $this->redirect(['index']);
-        	} else
-        		return $this->render('error');
+			if ($model->save())
+				return $this->redirect(['index']);
+			else
+        			return $this->render('error');
         } else {
             return $this->render('update', [
                 'model' => $model,

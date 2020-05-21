@@ -13,14 +13,14 @@ use frontend\widgets\RenderHeader;
 /* @var $content string */
 
 AppAsset::register($this);
-$category = isset($_GET['category']) ? $_GET['category'] : 'samsung';
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
-	<meta charset="<?= Yii::$app->charset ?>"/>
+	<meta charset="<?= Yii::$app->charset ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="preload" href="/js/bundled.js?v=<?= @filemtime(Yii::getAlias('@webroot').'/js/bundled.js') ?>" as="script">
 	<link rel="preconnect" href="http://www.google-analytics.com">
 	<link rel="preconnect" href="https://pagead2.googlesyndication.com">
 	<link rel="preconnect" href="https://tpc.googlesyndication.com">
@@ -28,8 +28,6 @@ $category = isset($_GET['category']) ? $_GET['category'] : 'samsung';
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<?= Html::csrfMetaTags() ?>
 	<title><?= Html::encode($this->title) ?></title>
-	<?php $this->head() ?>
-
 	<style type="text/css">
 		@font-face {
 			font-family: 'Roboto'; font-style: normal; font-weight: 300; font-display: swap;
@@ -38,6 +36,8 @@ $category = isset($_GET['category']) ? $_GET['category'] : 'samsung';
 			font-family: 'Roboto'; font-style: normal; font-weight: 400; font-display: swap;
 			src: local('Roboto'), local('Roboto-Regular'), url('/fonts/roboto-regular.woff2') format('woff2'), url('/fonts/roboto-regular.woff') format('woff');}
 	</style>
+	<?php $this->head() ?>
+
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -58,72 +58,30 @@ $category = isset($_GET['category']) ? $_GET['category'] : 'samsung';
 			</div>
 			<div id="menu-list" class="col-md d-none d-md-block categories-menu">
 				<ul class="categories">
-					<li>
-					<?php if ($category == 'samsung') {
-						echo Html::a('Samsung', Url::to(['post/index', 'category' => 'samsung']), ['class' => 'm-item active']);
-					?>
-						<div id="tag-nav" class="d-none d-md-block text-center tags-menu">
-							<?= NavTags::widget(); ?>
-						</div>
-					<?php } else
-						echo Html::a('Samsung', Url::to(['post/index', 'category' => 'samsung']), ['class' => 'm-item']);
-					?>
-					</li>
-					<li>
-					<?php if ($category == 'huawei-honor') {
-						echo Html::a('Huawei/Honor', Url::to(['post/index', 'category' => 'huawei-honor']), ['class' => 'm-item active']);
-					?>
-						<div id="tag-nav" class="d-none d-md-block text-center tags-menu">
-							<?= NavTags::widget(); ?>
-						</div>
-					<?php } else
-						echo Html::a('Huawei/Honor', Url::to(['post/index', 'category' => 'huawei-honor']), ['class' => 'm-item']);
-					?>
-					</li>
-					<li>
-					<?php if ($category == 'meizu') {
-						echo Html::a('Meizu', Url::to(['post/index', 'category' => 'meizu']), ['class' => 'm-item active']);
-					?>
-						<div id="tag-nav" class="d-none d-md-block text-center tags-menu">
-							<?= NavTags::widget(); ?>
-						</div>
-					<?php } else
-						echo Html::a('Meizu', Url::to(['post/index', 'category' => 'meizu']), ['class' => 'm-item']);
-					?>
-					</li>
-					<li>
-					<?php if ($category == 'xiaomi') {
-						echo Html::a('Xiaomi', Url::to(['post/index', 'category' => 'xiaomi']), ['class' => 'm-item active']);
-					?>
-						<div id="tag-nav" class="d-none d-md-block text-center tags-menu">
-							<?= NavTags::widget(); ?>
-						</div>
-					<?php } else
-						echo Html::a('Xiaomi', Url::to(['post/index', 'category' => 'xiaomi']), ['class' => 'm-item']);
-					?>
-					</li>
-					<li>
-					<?php if ($category == 'lenovo') {
-						echo Html::a('Lenovo', Url::to(['post/index', 'category' => 'lenovo']), ['class' => 'm-item active']);
-					?>
-						<div id="tag-nav" class="d-none d-md-block text-center tags-menu">
-							<?= NavTags::widget(); ?>
-						</div>
-					<?php } else
-						echo Html::a('Lenovo', Url::to(['post/index', 'category' => 'lenovo']), ['class' => 'm-item']);
-					?>
-					</li>
-					<li>
-					<?php if ($category == 'nokia-microsoft') {
-						echo Html::a('Nokia/Microsoft', Url::to(['post/index', 'category' => 'nokia-microsoft']), ['class' => 'm-item active']);
-					?>
-						<div id="tag-nav" class="d-none d-md-block text-center tags-menu">
-							<?= NavTags::widget(); ?>
-						</div>
-					<?php } else
-						echo Html::a('Nokia/Microsoft', Url::to(['post/index', 'category' => 'nokia-microsoft']), ['class' => 'm-item']);
-					?>
-					</li>
+				<?php
+					$activeCategory = $this->params['activeCategory'];
+					$activeTag = $this->params['tag'];
+
+					foreach ($this->params['categories'] as $category) {
+						echo '<li>';
+						if ($category['cat_alias'] == $activeCategory) {
+							echo Html::a(
+								$category['cat_title'],
+								Url::to(['post/index', 'category' => $category['cat_alias']]),
+								['class' => 'm-item active']
+							);
+							echo '<div id="tag-nav" class="d-none d-md-block text-center tags-menu">';
+							echo NavTags::widget(['category' => $activeCategory, 'tag' => $activeTag]);
+							echo '</div>';
+						} else
+							echo Html::a(
+								$category['cat_title'],
+								Url::to(['post/index', 'category' => $category['cat_alias']]),
+								['class' => 'm-item']
+							);
+						echo '</li>';
+					}
+				?>
 				</ul>
 			</div>
 			<div class="col d-block d-md-none">
@@ -174,7 +132,12 @@ $category = isset($_GET['category']) ? $_GET['category'] : 'samsung';
 			<div class="col-sm-12 d-none d-sm-block">
 				<div class="row no-gutters blog-slider-wrapper">
 					<div class="col-sm-12 col-md-10 offset-md-1 blog-slider">
-						<?= BlogSlider::widget(['count' => 3]); ?>
+						<?php
+							if ($this->beginCache('bslider', ['duration' => 3600])) {
+								echo BlogSlider::widget(['count' => 3]);
+								$this->endCache();
+							}
+						?>
 					</div>
 				</div>
 			</div>
@@ -200,7 +163,12 @@ $category = isset($_GET['category']) ? $_GET['category'] : 'samsung';
 		</div>
 		<div class="row">
 			<div class="col-12 posts-slider">
-				<?= PostSlider::widget(['count' => 12]); ?>
+				<?php
+					if ($this->beginCache('pslider', ['duration' => 3600])) {
+						echo PostSlider::widget(['count' => 12]);
+						$this->endCache();
+					}
+				?>
 			</div>
 		</div>
 		<div class="row footer-wrapper">

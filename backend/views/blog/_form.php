@@ -24,16 +24,19 @@ use vova07\imperavi\Widget;
     <?= $form->field($model, 'imageFile')->fileInput() ?>
     
     <p>
-    	<?php if ($model->preview_img) echo Html::img(Yii::$app->params['baseUrl'].$model->preview_img) ?>
-	</p>
+    	<?php if ($model->preview_img) {
+			$img = json_decode($model->preview_img, true);
+			echo Html::img(Yii::$app->params['baseUrl'].'/images/blog/'.$img['src'].'.jpg');
+	} ?>
+    </p>
 	
     <?= $form->field($model, 'intro')->widget(Widget::className(), [
 			'settings' => [
 				'lang' => 'ru',
 				'minHeight' => 200,
 				'buttonSource' => true,
-				'imageManagerJson' => Url::to(['/post/imageget']),
-				'imageUpload' => Url::to(['/post/imageupload']),
+				'imageManagerJson' => Url::to(['/blog/imageget']),
+				'imageUpload' => Url::to(['/blog/imageupload']),
 				'plugins' => [
 					'clips',
 					'imagemanager',

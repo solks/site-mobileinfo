@@ -39,50 +39,78 @@ class PostController extends \yii\web\Controller
     
     public function actionIndex($category = null, $tag = null)
     {
-        $query = Post::find()->where(['status' => 2,])
+		$cache = Yii::$app->cache;
+
+		$query = Post::find()
+			->where(['status' => 2])
         	->andFilterWhere(['like', 'category', $category])
         	->andFilterWhere(['like', 't_tags', $tag]);
-		
+
 		$pagination = new Pagination([
 			'defaultPageSize' => 5,
 			'totalCount' => $query->count(),
 			'forcePageParam' => false,
 		]);
-		
+
 		$posts = $query->orderBy('create_time DESC')
 			->offset($pagination->offset)
 			->limit($pagination->limit)
 			->all();
-		
-		$categoryName = Category::find()
-			->select('cat_title')
-			->filterWhere(['like', 'cat_alias', $category])
-			->scalar();
-		
-		$tagName = '';
-		if(!empty($tag)) {
-			$tagName = Tag::find()
-				->select('name')
-				->filterWhere(['t_name' => $tag, 'category' => $category])
-				->scalar();
+
+		$categories = $cache->get('categories');
+		if ($categories === false) {
+			$categories = Category::find()
+				->select(['cat_alias', 'cat_title'])
+				->where(['status' => 1])
+				->orderBy('dsp_order ASC')
+				->asArray()
+				->all();
+
+			$cache->set('categories', $categories, 3600);
 		}
-		
+
+		$activeCategory = $cache->get($category);
+		if ($activeCategory === false) {
+			$activeCategory = Category::find()
+				->select(['cat_alias', 'cat_title'])
+				->filterWhere(['like', 'cat_alias', $category])
+				->asArray()
+				->one();
+
+			$cache->set($category, $activeCategory, 3600);
+		}
+
+		$activeTag = ['name' => '', 't_name' => ''];
+		if(!empty($tag)) {
+			$activeTag = Tag::find()
+				->select(['name', 't_name'])
+				->filterWhere(['t_name' => $tag, 'category' => $category])
+				->asArray()
+				->one();
+		}
+
+		$this->view->params['categories'] = $categories;
+
+		$this->view->params['activeCategory'] = $activeCategory['cat_alias'];
+
+		$this->view->params['tag'] = $activeTag['t_name'];
+
 		if(!empty($tag)) {
 			$this->view->params['breadcrumbs'] = [
-				['label' => $categoryName, 'url' => ['post/index', 'category' => $category]],
-				$tagName,
+				['label' => $activeCategory['cat_title'], 'url' => ['post/index', 'category' => $activeCategory['cat_alias']]],
+				$activeTag['name'],
 			];
-			$this->contentTitle = $tagName.' - '.$categoryName;
+			$this->contentTitle = $activeTag['name'].' - '.$activeCategory['cat_title'];
 		} else {
 			$this->view->params['breadcrumbs'] = [
-				$categoryName,
+				$activeCategory['cat_title'],
 			];
-			$this->contentTitle = $categoryName;
+			$this->contentTitle = $activeCategory['cat_title'];
 		}
-			
+
 		return $this->render('index', [
-			'categoryName' => $categoryName,
-			'tagName' => $tagName,
+			'categoryName' => $activeCategory['cat_title'],
+			'tagName' => $activeTag['name'],
 			'posts' => $posts,
 			'pagination' => $pagination,
 		]);
@@ -90,7 +118,9 @@ class PostController extends \yii\web\Controller
 
     public function actionView($id = null)
     {
-        $newComment = new Comment;
+		$cache = Yii::$app->cache;
+
+		$newComment = new Comment;
         if(isset($_POST['Comment']))
 		{
 			$newComment->attributes = $_POST['Comment'];
@@ -99,22 +129,47 @@ class PostController extends \yii\web\Controller
 			if($newComment->save())
 				$this->refresh();
 		}
-        
+
         $post = Post::findOne($id);
-        Stat::increment($id);
-        
-        $categoryName = Category::find()
-			->select('cat_title')
-			->filterWhere(['like', 'cat_alias', $post->category])
-			->scalar();
-        
-        $this->view->params['breadcrumbs'] = [
-			['label' => $categoryName, 'url' => ['post/index', 'category' => $post->category]],
+
+		Stat::increment($id);
+
+		$categories = $cache->get('categories');
+		if ($categories === false) {
+			$categories = Category::find()
+				->select(['cat_alias', 'cat_title'])
+				->where(['status' => 1])
+				->orderBy('dsp_order ASC')
+				->asArray()
+				->all();
+
+			$cache->set('categories', $categories, 3600);
+		}
+
+		$activeCategory = $cache->get($post->category);
+		if ($activeCategory === false) {
+			$activeCategory = Category::find()
+				->select(['cat_alias', 'cat_title'])
+				->filterWhere(['like', 'cat_alias', $post->category])
+				->asArray()
+				->one();
+
+			$cache->set($post->category, $activeCategory, 3600);
+		}
+
+		$this->view->params['categories'] = $categories;
+
+		$this->view->params['activeCategory'] = $activeCategory['cat_alias'];
+
+		$this->view->params['tag'] = '';
+
+		$this->view->params['breadcrumbs'] = [
+			['label' => $activeCategory['cat_title'], 'url' => ['post/index', 'category' => $post->category]],
 			$post->title,
 		];
-		
+
 		$this->contentTitle = $post->title;
-        
+
         return $this->render('view', [
         	'post' => $post,
         	'newComment' => $newComment,

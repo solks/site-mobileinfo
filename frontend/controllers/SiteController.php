@@ -72,47 +72,77 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        // return $this->redirect(['post/index', 'category' => 'samsung']);
-        
+		$cache = Yii::$app->cache;
+
         $query = Post::find()->where(['status' => 2,]);
-		
+
 		$pagination = new Pagination([
 			'defaultPageSize' => 5,
 			'totalCount' => $query->count(),
 			'forcePageParam' => false,
 		]);
-		
+
 		$posts = $query->orderBy('update_time DESC')
 			->offset($pagination->offset)
 			->limit($pagination->limit)
 			->all();
-			
+
 		//$articles = Blog::find()->where(['status' => 2,])
 		//	->orderBy('create_time DESC')
 		//	->limit(3)
 		//	->all();
-		
+
+		$categories = $cache->get('categories');
+		if ($categories === false) {
+			$categories = Category::find()
+				->select(['cat_alias', 'cat_title'])
+				->where(['status' => 1])
+				->orderBy('dsp_order ASC')
+				->asArray()
+				->all();
+
+			$cache->set('categories', $categories, 3600);
+		}
+
+		$this->view->params['categories'] = $categories;
+
 		$this->contentTitle = 'Настройка смартфонов, Android';
-		
+
 		$this->layout = 'home';
-			
+
 		return $this->render('index', [
 			//'articles' => $articles,
 			'posts' => $posts,
 			'pagination' => $pagination,
 		]);
     }
-    
+
     public function actionSearch()
 	{
+		$cache = Yii::$app->cache;
+		
+		$categories = $cache->get('categories');
+		if ($categories === false) {
+			$categories = Category::find()
+				->select(['cat_alias', 'cat_title'])
+				->where(['status' => 1])
+				->orderBy('dsp_order ASC')
+				->asArray()
+				->all();
+
+			$cache->set('categories', $categories, 3600);
+		}
+
+		$this->view->params['categories'] = $categories;
+
 		$this->view->params['breadcrumbs'] = [
 			'Search',
 		];
-		
+
 		$this->contentTitle = 'Поиск по сайту';
-		
+
 		$this->layout = 'home';
-		
+
 		return $this->render('search');
 	}
 

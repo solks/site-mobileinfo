@@ -26,6 +26,9 @@ return [
                 ],
             ],
         ],
+        'cache' => [
+            'class' => 'yii\caching\FileCache',
+        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],

@@ -46,6 +46,7 @@ class BlogSlider extends Widget
 
 		return OwlCarousel::widget([
 			'items' => $items,
+			'id' => 'w-bslider',
 			'tag' => 'div',
 			//'containerOptions' => ['class' => 'blog-slider-content'],
 			'clientOptions' => [

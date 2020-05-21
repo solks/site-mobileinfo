@@ -2,16 +2,28 @@
 /* @var $this yii\web\View */
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
+
+$this->title = 'Блог';
+
+foreach ($articles as $data) { 
+	$img = json_decode($data['preview_img'], true);
 ?>
-<!--<h1 class="page-title">Блог</h1>-->
-<?php foreach ($articles as $data) { ?>
 <div class="item">
 	<div class="item-title">
 		<?= Html::a($data->title, $data->url); ?>
 	</div>
 	<div class="row section">
 		<div class="col-12 col-sm-auto section-image">
-			<?= Html::img($data->preview_img); ?>
+			<?= Html::img(
+					'/images/blog/thumb/'.$img['src'].'.jpg',
+					[
+						'class' => 'blog-slider-img lazyload',
+						'data-src' => '/images/blog/'.$img['src'].'.jpg',
+						'width' => $img['width'],
+						'height' => $img['height'],
+					]
+				); 
+			?>
 		</div>
 		<div class="col-12 col-sm">
 			<div class="blog-intro">

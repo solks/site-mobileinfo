@@ -25,6 +25,10 @@ return [
                 ],
             ],
         ],
+        'cache' => [
+            'class' => 'yii\caching\MemCache',
+            'useMemcached' => true,
+        ],
         'assetManager' => [
             'appendTimestamp' => true,
         ],

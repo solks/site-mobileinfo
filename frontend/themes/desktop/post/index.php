@@ -3,6 +3,13 @@
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 
+$t = 'Настройка '.$categoryName.', Android';
+if(!empty($tagName)) {
+	$this->title = $tagName.' - '.$t;
+} else {
+	$this->title = $t;
+}
+
 $i = 1;
 
 foreach ($posts as $data) { ?>
