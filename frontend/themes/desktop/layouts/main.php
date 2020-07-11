@@ -164,8 +164,9 @@ AppAsset::register($this);
 		<div class="row">
 			<div class="col-12 posts-slider">
 				<?php
-					if ($this->beginCache('pslider', ['duration' => 3600])) {
-						echo PostSlider::widget(['count' => 12]);
+					$psliderId = 'pslider-'.$activeCategory.'-'.$activeTag;
+					if ($this->beginCache($psliderId, ['duration' => 3600])) {
+						echo PostSlider::widget(['category' => $activeCategory, 'tag' => $activeTag, 'count' => 12]);
 						$this->endCache();
 					}
 				?>

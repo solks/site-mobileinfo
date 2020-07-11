@@ -8,18 +8,20 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="comment-search">
+<div class="row comment-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'post_id') ?>
+    <?php
+        $id_input = $form->field($model, 'post_id');
+        $id_input->template = "<div class=\"col-sm-2 comment-sch-id\">{label}</div><div class=\"col-sm-3\">{input}\n{hint}\n{error}</div>";
+        echo $id_input;
+    ?>
 
-    <?php //echo $form->field($model, 'status') ?>
-
-    <div class="form-group">
+    <div class="col-sm-7">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
     </div>

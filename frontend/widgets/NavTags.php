@@ -31,8 +31,7 @@ class NavTags extends Widget
         		$item['name'],
         		Url::to(['post/index', 'category' => $this->category, 'tag' => $item['t_name']]),
         		['class' => $item['t_name'] == $this->tag ? 'tag active' : 'tag']
-        	)
-        	."\n";
+        	);
         }
         
         return $res;

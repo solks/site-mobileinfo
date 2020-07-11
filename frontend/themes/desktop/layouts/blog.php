@@ -132,7 +132,8 @@ AppAsset::register($this);
 		<div class="row">
 			<div class="col-12 posts-slider">
 				<?php
-					if ($this->beginCache('pslider', ['duration' => 3600])) {
+					$psliderId = 'pslider-blog';
+					if ($this->beginCache($psliderId, ['duration' => 3600])) {
 						echo PostSlider::widget(['count' => 12]);
 						$this->endCache();
 					}

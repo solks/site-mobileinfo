@@ -8,16 +8,24 @@ use frontend\components\OwlCarousel;
 
 class PostSlider extends Widget
 {
+	public $category = '';
+
+	public $tag = '';
+
     public $count = 8;
 
     public function run()
     {
-        $posts = Post::find()
+        $query = Post::find()
 			->joinWith('stat')
 			->where(['status' => 2,])
 			->orderBy('hits DESC')
-			->limit($this->count)
-			->all();
+			->limit($this->count);
+
+		if ($this->category != '') $query->andFilterWhere(['category' => $this->category]);
+		if ($this->tag != '') $query->andFilterWhere(['like', 't_tags', $this->tag]);
+
+		$posts = $query->all();
 
         $items = '';
 
