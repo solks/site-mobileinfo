@@ -12,13 +12,13 @@ function openMenu() {
 	var searchBox=document.getElementById("site-search");
 	var headerBox=document.getElementById("head-nav");
 	if(menuBox.className.indexOf("categories-menu")==-1) {
-		menuBox.className="col-md d-none d-md-block categories-menu";
-		tagBox.className="d-none d-md-block text-center tags-menu";
+		menuBox.className="col-lg d-none d-lg-block categories-menu";
+		tagBox.className="d-none d-lg-block text-center tags-menu";
 		headerBox.className="header";
 	} else {
 		searchBox.className="col-sm-4 col-md-3 d-none d-sm-block search-inline";
-		menuBox.className="col-12 order-last d-block d-md-none categories-dropdown";
-		tagBox.className="d-block d-md-none tags-dropdown";
+		menuBox.className="col-12 order-last d-block d-lg-none categories-dropdown";
+		tagBox.className="d-block d-lg-none tags-dropdown";
 		headerBox.className="header-exp"
 	}
 	return;

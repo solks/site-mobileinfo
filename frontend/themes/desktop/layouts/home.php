@@ -55,7 +55,7 @@ AppAsset::register($this);
 			<div class="col-auto logo">
 				<a href="/"><span class="logo-img"></span></a>
 			</div>
-			<div id="menu-list" class="col-md d-none d-md-block categories-menu">
+			<div id="menu-list" class="col-lg d-none d-lg-block categories-menu">
 				<ul class="categories">
 				<?php
 					foreach ($this->params['categories'] as $category) {
@@ -70,7 +70,7 @@ AppAsset::register($this);
 				?>
 				</ul>
 			</div>
-			<div class="col d-block d-md-none">
+			<div class="col d-block d-lg-none">
 				<a class="menu-btn" onclick="openMenu()"><span class="menu-icon"></span></a>
 			</div>
 			<div id="site-search" class="col-sm-4 col-md-3 d-none d-sm-block search-inline">
