@@ -41,7 +41,7 @@ class OwlCarousel extends Carousel
     {
         $options = $this->getOptions();
         $view = $this->getView();
-        OwlCarouselAsset::register($view);
+        // OwlCarouselAsset::register($view);
 
         if (isset($this->clientOptions['animateOut']) && (!empty($this->clientOptions['animateOut'])) ||
             (isset($this->clientOptions['animateIn']) && (!empty($this->clientOptions['animateIn'])))

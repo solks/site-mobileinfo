@@ -40,4 +40,7 @@ function openSchForm() {
 jQuery(function ($) {
 	$('#w-bslider').owlCarousel({"loop":false,"margin":0,"nav":false,"items":1});
 	$('#w-pslider').owlCarousel({"loop":false,"margin":10,"nav":false,"responsive":{"0":{"items":1},"576":{"items":2},"768":{"items":3},"992":{"items":4}}});
+	$('#img-slider-1').owlCarousel({"loop":false,"margin":0,"nav":false,"items":1});
+	$('#img-slider-2').owlCarousel({"loop":false,"margin":0,"nav":false,"items":1});
+	$('#img-slider-3').owlCarousel({"loop":false,"margin":0,"nav":false,"items":1});
 });

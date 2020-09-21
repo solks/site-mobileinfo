@@ -1,6 +1,8 @@
 <?php
 /* @var $this yii\web\View */
 use yii\helpers\Html;
+use frontend\components\OwlCarousel;
+//use frontend\widgets\ImageSlider;
 
 $this->title = $post->title;
 ?>
@@ -15,19 +17,43 @@ $this->title = $post->title;
 	<div class="row section">
 		<div class="col-12 col-sm-auto section-image">
 			<?php
-				//foreach (array_filter($post->postImages, function ($k) use ($i) { return (int) $k[0] == $i; }, ARRAY_FILTER_USE_KEY) as $image) {
-				//	echo '<img src="/images/content/'.$image['src'].'.jpg" alt ="'.$image['alt'].'">';
-				//}
-				if (isset($post->postImages[$i.'-0'])) {
-					$fname = $post->postImages[$i.'-0']['src'].'.jpg';
+				$images = array_filter($post->postImages, function ($k) use ($i) { return (int) $k[0] == $i; }, ARRAY_FILTER_USE_KEY);
+
+				if (count($images) > 1) {
+					$items = '';
+					foreach ($images as $image) {
+						// echo '<img src="/images/content/'.$image['src'].'.jpg" alt ="'.$image['alt'].'">'
+						$items .= Html::img(
+							'/images/content/thumb/'.$image['src'].'.jpg',
+							[
+								'class' => 'lazyload',
+								'data-src' => '/images/content/'.$image['src'].'.jpg',
+								'alt' => $image['alt'],
+								'width' => $image['width'],
+								'height' => $image['height'],
+							]
+						);
+					};
+					echo OwlCarousel::widget([
+						'items' => $items,
+						'id' => 'img-slider-'.$i,
+						'clientOptions' => [
+							'loop' => true,
+							'margin' => 0,
+							'nav' => false,
+							'items' => 1,
+						],
+					]);
+				} elseif (isset($images[$i.'-0'])) {
+					$image = $images[$i.'-0'];
 					echo Html::img(
-						'/images/content/thumb/'.$fname,
+						'/images/content/thumb/'.$image['src'].'.jpg',
 						[
 							'class' => 'lazyload',
-							'data-src' => '/images/content/'.$fname,
-							'alt' => $post->postImages[$i.'-0']['alt'],
-							'width' => $post->postImages[$i.'-0']['width'],
-							'height' => $post->postImages[$i.'-0']['height'],
+							'data-src' => '/images/content/'.$image['src'].'.jpg',
+							'alt' => $image['alt'],
+							'width' => $image['width'],
+							'height' => $image['height'],
 						]
 					);
 				}

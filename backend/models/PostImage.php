@@ -81,7 +81,8 @@ class PostImage extends \yii\db\ActiveRecord
 			foreach ($images as $n => $image) {
 				$imageData = $this->parceTag($image);
 
-				$model = new PostImage(['post_id' => $this->post_id, 'cont_id' => $this->cont_id, 'idx' => $n]);
+				if (($model = PostImage::findOne(['post_id' => $this->post_id, 'cont_id' => $this->cont_id, 'idx' => $n])) == null)
+					$model = new PostImage(['post_id' => $this->post_id, 'cont_id' => $this->cont_id, 'idx' => $n]);
 
 				$model->src = $imageData['src'];
 				$model->alt = $imageData['alt'];

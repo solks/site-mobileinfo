@@ -66,8 +66,12 @@ class ImageUploadAction extends UploadFileAction
 			$this->makeimage($image_src, 'Microsoft-tpl.png', new Box(188, 334), new Box(225, 425),  new Point(18, 50));
 		} elseif (preg_match('/.*?Lenovo.*?/isu', $this->filename)) {
 			$this->makeimage($image_src, 'Lenovo-tpl.png', new Box(191, 339), new Box(225, 426),  new Point(17, 37));
+		} elseif (preg_match('/.*?Default-tpl.*?/isu', $this->filename)) {
+			$this->makeimage($image_src->thumbnail(new Box(203, 361)), 'Default-tpl.png', new Box(203, 361), new Box(228, 426),  new Point(12, 31));
 		} elseif (preg_match('/.*?SmartW.*?/isu', $this->filename)) {
-			$this->makeimage($image_src, 'Default-tpl.png', new Box(203, 361), new Box(228, 426),  new Point(12, 31));
+			$this->makeimage($image_src->thumbnail(new Box(203, 361)), 'Default-tpl.png', new Box(203, 361), new Box(228, 426),  new Point(12, 31));
+		} elseif (preg_match('/.*?MiBand4-tpl.*?/isu', $this->filename)) {
+			$this->makeimage($image_src->thumbnail(new Box(57, 109)), 'MiBand4-tpl.png', new Box(57, 109), new Box(90, 250),  new Point(16, 54));
 		} else {
 			$image_src->thumbnail(new Box(round($this->max_height*$w_src/$h_src), $this->max_height))
 				->save(Yii::getAlias($this->pathRes.$this->filename), ['quality' => 94]);
