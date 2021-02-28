@@ -32,7 +32,7 @@ class Tag extends \yii\db\ActiveRecord
         return [
             [['name', 't_name', 'category'], 'required'],
             [['frequency'], 'integer'],
-            [['name', 't_name', 'category'], 'string', 'max' => 128],
+            [['name', 't_name', 'category'], 'string', 'max' => 64],
             [['t_name', 'category'], 'unique', 'targetAttribute' => ['t_name', 'category'], 'message' => 'The combination of T Name and Category has already been taken.']
         ];
     }
@@ -44,24 +44,24 @@ class Tag extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            't_name' => 'T Name',
+            'name' => 'Tag',
+            't_name' => 'Tag transliteration',
             'category' => 'Category',
             'frequency' => 'Frequency',
         ];
     }
-    
+
     public static function string2array($tags) {
 		return preg_split('/\s*,\s*/', trim($tags), -1, PREG_SPLIT_NO_EMPTY);
 	}
-    
+
     public function updateFrequency($oldTags, $newTags) {
 		$oldTags = self::string2array($oldTags);
 		$newTags = self::string2array($newTags);
 		$this->addTags(array_values(array_diff($newTags,$oldTags)));
 		$this->removeTags(array_values(array_diff($oldTags,$newTags)));
 	}
-	
+
 	public function addTags($tags) {
 		foreach($tags as $name) {
 			if (!$this->updateAllCounters(['frequency' => 1], ['name' => $name, 'category' => $this->category])) {
@@ -74,7 +74,7 @@ class Tag extends \yii\db\ActiveRecord
 			}
 		}
 	}
-	
+
 	public function removeTags($tags) {
 		if(empty($tags)) return;
 		$this->updateAllCounters(['frequency' => -1], ['name' => $tags, 'category' => $this->category]);

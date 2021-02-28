@@ -53,7 +53,8 @@ class Post extends \yii\db\ActiveRecord
             [['title', 'category', 'cont1', 'status'], 'required'],
             [['intro', 'cont1', 'cont2', 'cont3', 'tags', 't_tags'], 'string'],
             [['status', 'create_time', 'update_time', 'author_id'], 'integer'],
-            [['title', 'alias', 'category'], 'string', 'max' => 128],
+            [['title', 'alias'], 'string', 'max' => 128],
+            [['category'], 'string', 'max' => 64],
             [['video'], 'string', 'max' => 16]
         ];
     }
@@ -74,7 +75,7 @@ class Post extends \yii\db\ActiveRecord
             'cont3' => 'Шаг 3',
             'video' => 'Youtube видео',
             'tags' => 'Теги',
-            't_tags' => 'T Tags',
+            't_tags' => 'Tags transliteration',
             'status' => 'Статус',
             'create_time' => 'Create Time',
             'update_time' => 'Update Time',

@@ -29,7 +29,7 @@ class Blog extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'alias', 'intro', 'preview_img', 'create_time', 'update_time'], 'required'],
+            [['title', 'intro'], 'required'],
             [['intro', 'content'], 'string'],
             [['status', 'create_time', 'update_time', 'author_id'], 'integer'],
             [['title', 'alias', 'preview_img'], 'string', 'max' => 128]
@@ -51,7 +51,7 @@ class Blog extends \yii\db\ActiveRecord
             'author_id' => 'Author ID',
         ];
     }
-    
+
     public function getUrl()
     {
     	return Url::to(['blog/view', 'id' => $this->id, 'title' => $this->alias]);

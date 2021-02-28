@@ -18,9 +18,9 @@ $this->title = $post->title;
 		<div class="col-12 col-sm-auto section-image">
 			<?php
 				$images = array_filter($post->postImages, function ($k) use ($i) { return (int) $k[0] == $i; }, ARRAY_FILTER_USE_KEY);
+				$items = '';
 
 				if (count($images) > 1) {
-					$items = '';
 					foreach ($images as $image) {
 						// echo '<img src="/images/content/'.$image['src'].'.jpg" alt ="'.$image['alt'].'">'
 						$items .= Html::img(
@@ -46,7 +46,7 @@ $this->title = $post->title;
 					]);
 				} elseif (isset($images[$i.'-0'])) {
 					$image = $images[$i.'-0'];
-					echo Html::img(
+					$items = Html::img(
 						'/images/content/thumb/'.$image['src'].'.jpg',
 						[
 							'class' => 'lazyload',
@@ -56,6 +56,7 @@ $this->title = $post->title;
 							'height' => $image['height'],
 						]
 					);
+					echo Html::tag('div', $items, ['class' => 'image-wrap']);
 				}
 			?>
 		</div>
@@ -64,18 +65,31 @@ $this->title = $post->title;
 		</div>
 	</div>
 	<?php $i++; } ?>
-	<div class="a2">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- infosmartphone_links -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-5001158605331260"
-     data-ad-slot="3050750852"
-     data-ad-format="link"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+	<div class="row a2">
+		<div class="col-12 col-sm-6">
+			<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+			<ins class="adsbygoogle"
+			     style="display:block"
+			     data-ad-format="fluid"
+			     data-ad-layout-key="-dq+4o-14-iy+1bo"
+			     data-ad-client="ca-pub-5001158605331260"
+			     data-ad-slot="8976986489"></ins>
+			<script>
+			     (adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+		</div>
+		<div class="d-none d-sm-block col-sm-6">
+			<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+			<ins class="adsbygoogle"
+			     style="display:block"
+			     data-ad-format="fluid"
+			     data-ad-layout-key="-dq+4o-14-iy+1bo"
+			     data-ad-client="ca-pub-5001158605331260"
+			     data-ad-slot="8976986489"></ins>
+			<script>
+			     (adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+		</div>
 	</div>
 	<?php if ($post->video != '') { ?>
 	<div id="video" class="s-title">Видео</div>

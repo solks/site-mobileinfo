@@ -28,7 +28,8 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             [['cat_title', 'cat_alias'], 'required'],
-            [['cat_title', 'cat_alias'], 'string', 'max' => 128]
+            [['cat_title', 'cat_alias'], 'string', 'max' => 64],
+            [['status'], 'safe'],
         ];
     }
 
@@ -39,8 +40,9 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'cat_title' => 'Cat Title',
-            'cat_alias' => 'Cat Alias',
+			'cat_title' => 'Category title',
+			'cat_alias' => 'Category alias',
+            'status' => 'Status',
         ];
     }
 }

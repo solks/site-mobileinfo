@@ -18,7 +18,6 @@ use yii\helpers\Url;
  * @property string $cont2
  * @property string $cont3
  * @property string $video
- * @property string $images
  * @property string $tags
  * @property string $atags
  * @property integer $status
@@ -45,10 +44,11 @@ class Post extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'alias', 'category', 'cont1', 'status', 'author_id'], 'required'],
+            [['title', 'category', 'cont1', 'status'], 'required'],
             [['intro', 'cont1', 'cont2', 'cont3', 'tags', 't_tags'], 'string'],
             [['status', 'create_time', 'update_time', 'author_id'], 'integer'],
-            [['title', 'alias', 'category'], 'string', 'max' => 128],
+            [['title', 'alias'], 'string', 'max' => 128],
+            [['category'], 'string', 'max' => 64],
             [['video'], 'string', 'max' => 16]
         ];
     }
@@ -68,9 +68,8 @@ class Post extends \yii\db\ActiveRecord
             'cont2' => 'Cont2',
             'cont3' => 'Cont3',
             'video' => 'Video',
-            'images' => 'Content images',
             'tags' => 'Tags',
-            't_tags' => 'Atags',
+            't_tags' => 'Tags transliteration',
             'status' => 'Status',
             'create_time' => 'Create Time',
             'update_time' => 'Update Time',
@@ -83,7 +82,7 @@ class Post extends \yii\db\ActiveRecord
         return $this->hasMany(Comment::className(), ['post_id' => 'id'])
         	->orderBy('create_time DESC')->asArray();
     }
-    
+
     public function getCommentCount()
     {
         return $this->hasMany(Comment::className(), ['post_id' => 'id'])
@@ -93,9 +92,9 @@ class Post extends \yii\db\ActiveRecord
     public function getPostImages()
     {
         return $this->hasMany(PostImage::className(), ['post_id' => 'id'])
-        	->indexBy(function ($row) { return $row['cont_id'].'-'.$row['idx'];})->asArray();
+        	->indexBy(function ($row) {return $row['cont_id'].'-'.$row['idx'];})->asArray();
     }
-    
+
     public function getCategory()
 	{
 		return $this->hasOne(Category::className(), ['cat_alias' => 'category']);
@@ -105,17 +104,17 @@ class Post extends \yii\db\ActiveRecord
     {
         return $this->hasOne(TblUser::className(), ['id' => 'author_id']);
     }
-    
+
     public function getStat()
     {
         return $this->hasOne(Stat::className(), ['post_id' => 'id']);
     }
-    
+
     public function getUrl()
 	{
 		return Url::to(['post/view', 'category'=>$this->category, 'id'=>$this->id, 'title'=>$this->alias]);
 	}
-	
+
 	public function getActiveTags()
 	{
 		$links = array();

@@ -20,7 +20,7 @@ foreach ($posts as $data) { ?>
 			<?php
 				if (isset($data->postImages['1-0'])) {
 					$fname = $data->postImages['1-0']['src'].'.jpg';
-					echo Html::img(
+					$img = Html::img(
 						'/images/content/thumb/'.$fname,
 						[
 							'class' => 'lazyload',
@@ -30,6 +30,7 @@ foreach ($posts as $data) { ?>
 							'height' => $data->postImages['1-0']['height'],
 						]
 					);
+					echo Html::tag('div', $img, ['class' => 'image-wrap']);
 				}
 			?>
 		</div>
@@ -45,7 +46,7 @@ foreach ($posts as $data) { ?>
 		<div class="col-12 col-lg">
 			<div class="item-nav">
 				<b>Теги:</b>
-				<?php 
+				<?php
 					foreach($data->ActiveTags as $key => $val)
 						echo Html::a($key, $val).', ';
 				?>

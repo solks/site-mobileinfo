@@ -5,16 +5,5 @@ use yii\widgets\LinkPager;
 
 $this->title = 'Поиск по сайту';
 ?>
-<script>
-  (function() {
-    var cx = 'partner-pub-5001158605331260:1362917028';
-    var gcse = document.createElement('script');
-    gcse.type = 'text/javascript';
-    gcse.async = true;
-    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(gcse, s);
-  })();
-</script>
-<gcse:searchresults-only></gcse:searchresults-only>
-
+<script async src="https://cse.google.com/cse.js?cx=partner-pub-5001158605331260:1362917028"></script>
+<div class="gcse-searchresults-only"></div>

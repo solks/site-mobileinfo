@@ -60,6 +60,8 @@ class ImageUploadAction extends UploadFileAction
 			$this->makeimage($image_src, 'Xiaomi-tpl.png', new Box(204, 362), new Box(226, 426),  new Point(11, 30));
 		} elseif (preg_match('/.*?Huawei.*?/isu', $this->filename)) {
 			$this->makeimage($image_src, 'Huawei-tpl.png', new Box(185, 401), new Box(210, 436),  new Point(12, 11));
+		} elseif (preg_match('/.*?[_\-\s]ZTE.*?/isu', $this->filename)) {
+			$this->makeimage($image_src, 'ZTE-tpl.png', new Box(191, 413), new Box(210, 442),  new Point(9, 10));
 		} elseif (preg_match('/.*?Samsung.*?/isu', $this->filename)) {
 			$this->makeimage($image_src, 'Samsung-tpl.png', new Box(192, 341), new Box(215, 426),  new Point(12, 45));
 		} elseif (preg_match('/.*?Microsoft.*?/isu', $this->filename)) {

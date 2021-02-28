@@ -9,7 +9,8 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
- * @property string $aname
+ * @property string $t_name
+ * @property string $category
  * @property integer $frequency
  */
 class Tag extends \yii\db\ActiveRecord
@@ -28,9 +29,9 @@ class Tag extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'aname'], 'required'],
+            [['name', 'aname', 'category'], 'required'],
             [['frequency'], 'integer'],
-            [['name', 'aname'], 'string', 'max' => 128]
+            [['name', 'aname', 'category'], 'string', 'max' => 64]
         ];
     }
 
@@ -41,8 +42,9 @@ class Tag extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'aname' => 'Aname',
+            'name' => 'Tag',
+            't_name' => 'Tag transliteration',
+			'category' => 'Category',
             'frequency' => 'Frequency',
         ];
     }

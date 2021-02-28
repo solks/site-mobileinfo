@@ -53,7 +53,7 @@ class Blog extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'status', 'intro'], 'required'],
+            [['title', 'intro'], 'required'],
             [['intro', 'content'], 'string'],
             [['status', 'create_time', 'update_time', 'author_id'], 'integer'],
             [['title', 'alias', 'preview_img'], 'string', 'max' => 128],
@@ -78,14 +78,6 @@ class Blog extends \yii\db\ActiveRecord
             'update_time' => 'Update Time',
             'author_id' => 'Author ID',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getComments()
-    {
-        return $this->hasMany(Comment::className(), ['post_id' => 'id']);
     }
 
     /**

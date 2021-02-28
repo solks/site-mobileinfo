@@ -11,20 +11,21 @@ use app\models\Comment;
 use app\models\Stat;
 use yii\data\Pagination;
 use yii\base\Theme;
+use yii\helpers\Url;
 
 class PostController extends \yii\web\Controller
 {
 	public $contentTitle = '';
-	
+
     public function beforeAction($action)
 	{
 		if (!parent::beforeAction($action)) {
 			return false;
 		}
-		
+
 		return true; // or false to not run the action
 	}
-	
+
 	public function actions()
 	{
 		return [
@@ -36,7 +37,7 @@ class PostController extends \yii\web\Controller
 			],
 		];
 	}
-    
+
     public function actionIndex($category = null, $tag = null)
     {
 		$cache = Yii::$app->cache;
@@ -84,7 +85,8 @@ class PostController extends \yii\web\Controller
 		if(!empty($tag)) {
 			$activeTag = Tag::find()
 				->select(['name', 't_name'])
-				->filterWhere(['t_name' => $tag, 'category' => $category])
+				->filterWhere(['like', 'category', $category])
+				->andfilterWhere(['like', 't_name', $tag])
 				->asArray()
 				->one();
 		}
@@ -96,17 +98,28 @@ class PostController extends \yii\web\Controller
 		$this->view->params['tag'] = $activeTag['t_name'];
 
 		if(!empty($tag)) {
+			$url = Url::to(['post/index', 'category'=>$activeCategory['cat_alias'], 'tag'=>$activeTag['t_name']]);
+			if(!empty(Yii::$app->request->queryString))
+				$url .= '?'.Yii::$app->request->queryString;
+
 			$this->view->params['breadcrumbs'] = [
 				['label' => $activeCategory['cat_title'], 'url' => ['post/index', 'category' => $activeCategory['cat_alias']]],
 				$activeTag['name'],
 			];
 			$this->contentTitle = $activeTag['name'].' - '.$activeCategory['cat_title'];
 		} else {
+			$url = Url::to(['post/index', 'category'=>$activeCategory['cat_alias']]);
+			if(!empty(Yii::$app->request->queryString))
+				$url .= '?'.Yii::$app->request->queryString;
+
 			$this->view->params['breadcrumbs'] = [
 				$activeCategory['cat_title'],
 			];
 			$this->contentTitle = $activeCategory['cat_title'];
 		}
+
+		if (Yii::$app->request->url != $url)
+			$this->redirect($url, 301);
 
 		return $this->render('index', [
 			'categoryName' => $activeCategory['cat_title'],
@@ -131,6 +144,10 @@ class PostController extends \yii\web\Controller
 		}
 
         $post = Post::findOne($id);
+		if ($post === null)
+        	throw new HttpException(404, 'The requested page could not be found.');
+        elseif (Yii::$app->request->url != $post->url)
+			$this->redirect($post->url, 301);
 
 		Stat::increment($id);
 
